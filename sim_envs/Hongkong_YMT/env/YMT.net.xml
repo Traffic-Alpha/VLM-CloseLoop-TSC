@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-04-18 19:58:30 by Eclipse SUMO netedit Version 1.22.0
+<neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
+
+    <input>
+        <sumocfg-file value="YMT.sumocfg"/>
+        <additional-files value=""/>
+        <route-files value="./env/YMT.rou.xml"/>
+        <sumo-net-file value="./env/YMT.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="./env/YMT.net.xml"/>
+        <output.street-names value="true"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+    <netedit>
+        <ignore.routeelements value="false"/>
+    </netedit>
+
+</neteditConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="-208340.08,-2470005.34" convBoundary="0.00,0.00,455.34,500.19" origBoundary="114.167497,22.295190,114.178225,22.317406" projParameter="+proj=utm +zone=50 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <type id="highway.primary" priority="12" numLanes="2" speed="27.78" oneway="0"/>
+    <type id="highway.residential" priority="3" numLanes="2" speed="13.89" oneway="0"/>
+    <type id="highway.tertiary" priority="10" numLanes="1" speed="22.22" oneway="0"/>
+
+    <edge id=":11134510123_0" function="internal">
+        <lane id=":11134510123_0_0" index="0" speed="27.78" length="0.31" shape="252.31,212.95 252.11,212.88"/>
+        <lane id=":11134510123_0_1" index="1" speed="27.78" length="0.31" shape="253.38,209.93 253.09,209.83"/>
+        <lane id=":11134510123_0_2" index="2" speed="27.78" length="0.31" shape="254.46,206.92 254.08,206.79"/>
+    </edge>
+    <edge id=":1151084917_0" function="internal">
+        <lane id=":1151084917_0_0" index="0" speed="27.78" length="11.81" shape="237.82,214.58 241.40,215.18 243.84,215.66 246.24,216.30 249.69,217.40"/>
+        <lane id=":1151084917_0_1" index="1" speed="27.78" length="11.81" shape="237.31,217.74 240.77,218.30 243.13,218.76 245.44,219.40 248.78,220.47"/>
+        <lane id=":1151084917_0_2" index="2" speed="27.78" length="11.81" shape="236.81,220.90 240.15,221.44 242.42,221.89 244.65,222.51 247.87,223.54"/>
+    </edge>
+    <edge id=":1151084917_3" function="internal">
+        <lane id=":1151084917_3_0" index="0" speed="6.58" length="9.22" shape="236.81,220.90 239.17,221.64 240.72,223.00 241.47,224.97 241.43,227.55"/>
+    </edge>
+    <edge id=":276373355_0" function="internal">
+        <lane id=":276373355_0_0" index="0" speed="27.78" length="11.11" shape="120.80,189.18 109.91,187.30"/>
+        <lane id=":276373355_0_1" index="1" speed="27.78" length="11.11" shape="121.37,186.04 110.42,184.14"/>
+        <lane id=":276373355_0_2" index="2" speed="27.78" length="11.11" shape="121.94,182.89 110.94,180.99"/>
+    </edge>
+    <edge id=":276373355_3" function="internal">
+        <lane id=":276373355_3_0" index="0" speed="7.32" length="11.72" shape="117.37,176.37 116.41,180.11 114.92,182.66 112.93,184.00 110.42,184.14"/>
+        <lane id=":276373355_3_1" index="1" speed="6.51" length="9.03" shape="117.37,176.37 116.63,178.73 115.31,180.29 113.42,181.04 110.94,180.99"/>
+    </edge>
+    <edge id=":8201906508_0" function="internal">
+        <lane id=":8201906508_0_0" index="0" speed="27.78" length="11.01" shape="101.97,190.49 112.85,192.27"/>
+        <lane id=":8201906508_0_1" index="1" speed="27.78" length="11.01" shape="101.46,193.65 112.32,195.43"/>
+        <lane id=":8201906508_0_2" index="2" speed="27.78" length="11.01" shape="100.96,196.81 111.80,198.59"/>
+    </edge>
+    <edge id=":8201906508_3" function="internal">
+        <lane id=":8201906508_3_0" index="0" speed="6.44" length="8.90" shape="100.96,196.81 103.29,197.53 104.82,198.83 105.55,200.70 105.48,203.15"/>
+    </edge>
+    <edge id=":8768492967_0" function="internal">
+        <lane id=":8768492967_0_0" index="0" speed="27.78" length="0.30" shape="79.06,186.82 79.37,186.86"/>
+        <lane id=":8768492967_0_1" index="1" speed="27.78" length="0.30" shape="78.57,189.98 78.87,190.02"/>
+        <lane id=":8768492967_0_2" index="2" speed="27.78" length="0.30" shape="78.08,193.14 78.36,193.18"/>
+    </edge>
+    <edge id=":J0_0" function="internal">
+        <lane id=":J0_0_0" index="0" speed="27.78" length="8.23" shape="136.05,191.70 128.13,190.52"/>
+        <lane id=":J0_0_1" index="1" speed="27.78" length="8.23" shape="136.62,188.55 128.70,187.37"/>
+        <lane id=":J0_0_2" index="2" speed="27.78" length="8.23" shape="136.62,188.55 134.29,187.66 132.95,186.38 131.60,185.11 129.28,184.22"/>
+    </edge>
+    <edge id=":J1_0" function="internal">
+        <lane id=":J1_0_0" index="0" speed="27.78" length="27.97" shape="186.74,200.61 159.17,195.89"/>
+        <lane id=":J1_0_1" index="1" speed="27.78" length="27.97" shape="187.24,197.45 159.68,192.73"/>
+    </edge>
+    <edge id=":J1_2" function="internal">
+        <lane id=":J1_2_0" index="0" speed="6.88" length="10.51" shape="187.70,194.28 184.44,193.49 182.25,192.16 181.13,190.28 181.06,187.87"/>
+        <lane id=":J1_2_1" index="1" speed="6.04" length="7.84" shape="187.70,194.28 185.83,193.69 184.63,192.51 184.09,190.74 184.22,188.39"/>
+    </edge>
+    <edge id=":J1_4" function="internal">
+        <lane id=":J1_4_0" index="0" speed="10.67" length="26.02" shape="173.58,186.64 173.32,194.11 175.28,199.81 179.47,203.73 185.89,205.88"/>
+        <lane id=":J1_4_1" index="1" speed="11.19" length="28.71" shape="173.58,186.64 173.09,195.49 174.89,202.18 178.99,206.69 185.39,209.04"/>
+    </edge>
+    <edge id=":J1_6" function="internal">
+        <lane id=":J1_6_0" index="0" speed="27.78" length="28.60" shape="170.43,186.12 169.59,194.60 169.85,200.50 170.09,206.39 169.16,214.86"/>
+        <lane id=":J1_6_1" index="1" speed="27.78" length="28.60" shape="170.43,186.12 166.01,214.28"/>
+        <lane id=":J1_6_2" index="2" speed="27.78" length="28.60" shape="167.27,185.59 162.87,213.70"/>
+    </edge>
+    <edge id=":J1_9" function="internal">
+        <lane id=":J1_9_0" index="0" speed="27.78" length="28.01" shape="158.49,200.05 185.89,205.88"/>
+        <lane id=":J1_9_1" index="1" speed="27.78" length="28.01" shape="157.98,203.21 185.39,209.04"/>
+        <lane id=":J1_9_2" index="2" speed="27.78" length="28.01" shape="157.47,206.37 184.88,212.20"/>
+    </edge>
+    <edge id=":J1_12" function="internal">
+        <lane id=":J1_12_0" index="0" speed="27.78" length="28.72" shape="173.10,215.59 177.91,187.35"/>
+        <lane id=":J1_12_1" index="1" speed="27.78" length="28.72" shape="176.25,216.18 181.06,187.87"/>
+        <lane id=":J1_12_2" index="2" speed="27.78" length="28.72" shape="179.39,216.76 184.22,188.39"/>
+    </edge>
+
+    <edge id="102454134#0" from="8201906508" to="J1" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="106.85,194.51 111.58,195.30 153.50,202.60 156.57,203.02">
+        <lane id="102454134#0_0" index="0" speed="27.78" length="46.32" shape="112.85,192.27 153.99,199.44 158.49,200.05">
+            <param key="origId" value="102454134"/>
+        </lane>
+        <lane id="102454134#0_1" index="1" speed="27.78" length="46.32" shape="112.32,195.43 153.50,202.60 157.98,203.21">
+            <param key="origId" value="102454134"/>
+        </lane>
+        <lane id="102454134#0_2" index="2" speed="27.78" length="46.32" shape="111.80,198.59 153.01,205.76 157.47,206.37">
+            <param key="origId" value="102454134"/>
+        </lane>
+        <param key="origTo" value="1151084802"/>
+    </edge>
+    <edge id="102640412#0" from="J1" to="J0" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" shape="158.49,190.89 154.99,190.25 133.03,186.27">
+        <lane id="102640412#0_0" index="0" speed="27.78" length="23.46" shape="159.17,195.89 154.13,194.97 136.05,191.70">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <lane id="102640412#0_1" index="1" speed="27.78" length="23.46" shape="159.68,192.73 154.70,191.82 136.62,188.55">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <param key="origFrom" value="1151084822"/>
+    </edge>
+    <edge id="102640412#0.25" from="J0" to="276373355" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center">
+        <lane id="102640412#0.25_0" index="0" speed="27.78" length="7.45" shape="128.13,190.52 120.80,189.18">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <lane id="102640412#0.25_1" index="1" speed="27.78" length="7.45" shape="128.70,187.37 121.37,186.04">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <lane id="102640412#0.25_2" index="2" speed="27.78" length="7.45" shape="129.28,184.22 121.94,182.89">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <param key="origFrom" value="1151084822"/>
+    </edge>
+    <edge id="102640412#2" from="276373355" to="276372857" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="115.94,185.05 66.39,176.92 59.30,175.57 48.09,174.05 24.29,170.32 13.58,168.63 10.27,168.09 0.00,166.33">
+        <lane id="102640412#2_0" index="0" speed="27.78" length="111.86" shape="109.91,187.30 65.83,180.07 58.79,178.73 47.63,177.22 23.79,173.48 13.08,171.79 9.74,171.25 -0.54,169.48">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <lane id="102640412#2_1" index="1" speed="27.78" length="111.86" shape="110.42,184.14 66.39,176.92 59.30,175.57 48.09,174.05 24.29,170.32 13.58,168.63 10.27,168.09 -0.00,166.33">
+            <param key="origId" value="102640412"/>
+        </lane>
+        <lane id="102640412#2_2" index="2" speed="27.78" length="111.86" shape="110.94,180.99 66.95,173.77 59.81,172.41 48.55,170.88 24.79,167.16 14.08,165.47 10.80,164.93 0.54,163.18">
+            <param key="origId" value="102640412"/>
+        </lane>
+    </edge>
+    <edge id="102640426#0" from="J1" to="9125470662" name="彌敦道 Nathan Road" priority="12" type="highway.primary" spreadType="center" shape="181.16,187.32 186.57,156.24 191.33,127.85 192.62,119.99 195.35,103.54 200.77,69.79 201.68,63.88 206.87,30.01 208.45,19.68 210.71,4.92 211.46,0.00">
+        <lane id="102640426#0_0" index="0" speed="27.78" length="190.32" shape="177.91,187.35 183.42,155.70 188.17,127.32 189.46,119.47 192.19,103.02 197.61,69.29 198.52,63.39 203.71,29.53 205.29,19.20 207.55,4.44 208.30,-0.48">
+            <param key="origId" value="102640426"/>
+        </lane>
+        <lane id="102640426#0_1" index="1" speed="27.78" length="190.32" shape="181.06,187.87 186.57,156.24 191.33,127.85 192.62,119.99 195.35,103.54 200.77,69.79 201.68,63.88 206.87,30.01 208.45,19.68 210.71,4.92 211.46,-0.00">
+            <param key="origId" value="102640426"/>
+        </lane>
+        <lane id="102640426#0_2" index="2" speed="27.78" length="190.32" shape="184.22,188.39 189.72,156.78 194.49,128.38 195.78,120.51 198.51,104.06 203.93,70.29 204.84,64.37 210.03,30.49 211.61,20.16 213.87,5.40 214.62,0.48">
+            <param key="origId" value="102640426"/>
+        </lane>
+        <param key="origFrom" value="33004488"/>
+    </edge>
+    <edge id="102640429" from="1151084917" to="6834003674" name="東方街 Tung Fong Street" priority="3" type="highway.residential" spreadType="center">
+        <lane id="102640429_0" index="0" speed="13.89" length="84.87" shape="241.43,227.55 228.44,311.42">
+            <param key="origId" value="102640429"/>
+        </lane>
+    </edge>
+    <edge id="102640432#0" from="J1" to="1151084917" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="186.10,209.16 237.21,217.72 242.81,218.61">
+        <lane id="102640432#0_0" index="0" speed="27.78" length="52.65" shape="185.89,205.88 237.82,214.58">
+            <param key="origId" value="102640432"/>
+        </lane>
+        <lane id="102640432#0_1" index="1" speed="27.78" length="52.65" shape="185.39,209.04 237.21,217.72 237.31,217.74">
+            <param key="origId" value="102640432"/>
+        </lane>
+        <lane id="102640432#0_2" index="2" speed="27.78" length="52.65" shape="184.88,212.20 236.68,220.88 236.81,220.90">
+            <param key="origId" value="102640432"/>
+        </lane>
+        <param key="origFrom" value="1151084876"/>
+    </edge>
+    <edge id="102640432#3" from="1151084917" to="11234081814" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="242.81,218.61 245.87,219.52 249.84,220.82 254.58,222.86 257.88,225.48 260.70,228.80 268.45,240.43 286.16,267.06 298.91,285.35 311.79,303.90 314.93,307.94 330.68,329.68 340.01,342.12 367.20,378.38 377.32,392.57 396.40,419.37 401.87,427.03 426.52,462.27 436.03,474.78 455.34,500.19">
+        <lane id="102640432#3_0" index="0" speed="27.78" length="348.89" shape="249.69,217.40 250.97,217.82 256.24,220.09 260.12,223.17 263.26,226.87 271.11,238.66 288.81,265.26 301.54,283.52 314.37,302.00 317.49,306.02 333.26,327.78 342.57,340.20 369.78,376.49 379.93,390.71 399.01,417.51 404.48,425.18 429.11,460.38 438.58,472.84 457.89,498.25">
+            <param key="origId" value="102640432"/>
+        </lane>
+        <lane id="102640432#3_1" index="1" speed="27.78" length="348.89" shape="248.78,220.47 249.84,220.82 254.58,222.86 257.88,225.48 260.70,228.80 268.45,240.43 286.16,267.06 298.91,285.35 311.79,303.90 314.93,307.94 330.68,329.68 340.01,342.12 367.20,378.38 377.32,392.57 396.40,419.37 401.87,427.03 426.52,462.27 436.03,474.78 455.34,500.19">
+            <param key="origId" value="102640432"/>
+        </lane>
+        <lane id="102640432#3_2" index="2" speed="27.78" length="348.89" shape="247.87,223.54 248.71,223.82 252.92,225.63 255.64,227.79 258.14,230.73 265.79,242.20 283.51,268.86 296.28,287.18 309.21,305.80 312.37,309.86 328.10,331.58 337.45,344.04 364.62,380.27 374.71,394.43 393.79,421.23 399.26,428.88 423.93,464.16 433.48,476.72 452.79,502.13">
+            <param key="origId" value="102640432"/>
+        </lane>
+    </edge>
+    <edge id="102640453#0" from="J1" to="1151084825" name="彌敦道 Nathan Road" priority="12" type="highway.primary" spreadType="center" shape="165.97,214.53 163.38,229.16 162.78,232.62 155.72,273.70 151.60,296.96 148.90,312.72 148.08,317.49 145.09,334.34 143.37,344.15 141.31,357.98 139.00,373.40">
+        <lane id="102640453#0_0" index="0" speed="27.78" length="161.40" shape="169.16,214.86 166.53,229.72 165.93,233.16 158.87,274.25 154.75,297.51 152.05,313.26 151.23,318.05 148.24,334.90 146.53,344.66 144.47,358.45 142.16,373.87">
+            <param key="origId" value="102640453"/>
+        </lane>
+        <lane id="102640453#0_1" index="1" speed="27.78" length="161.40" shape="166.01,214.28 163.38,229.16 162.78,232.62 155.72,273.70 151.60,296.96 148.90,312.72 148.08,317.49 145.09,334.34 143.37,344.15 141.31,357.98 139.00,373.40">
+            <param key="origId" value="102640453"/>
+        </lane>
+        <lane id="102640453#0_2" index="2" speed="27.78" length="161.40" shape="162.87,213.70 160.23,228.60 159.63,232.08 152.57,273.15 148.45,296.41 145.75,312.18 144.93,316.93 141.94,333.78 140.21,343.64 138.15,357.51 135.84,372.93">
+            <param key="origId" value="102640453"/>
+        </lane>
+        <param key="origFrom" value="1151084802"/>
+    </edge>
+    <edge id="1200878753#0" from="11134510123" to="J1" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="253.24,209.88 240.68,205.81 223.18,202.67 205.47,199.95 187.26,197.45">
+        <lane id="1200878753#0_0" index="0" speed="27.78" length="67.16" shape="252.11,212.88 239.90,208.92 222.65,205.83 205.01,203.12 186.74,200.61">
+            <param key="origId" value="1200878753"/>
+        </lane>
+        <lane id="1200878753#0_1" index="1" speed="27.78" length="67.16" shape="253.09,209.83 240.68,205.81 223.18,202.67 205.47,199.95 187.24,197.45">
+            <param key="origId" value="1200878753"/>
+        </lane>
+        <lane id="1200878753#0_2" index="2" speed="27.78" length="67.16" shape="254.08,206.79 241.46,202.70 223.71,199.51 205.93,196.78 187.70,194.28">
+            <param key="origId" value="1200878753"/>
+        </lane>
+        <param key="origTo" value="33004488"/>
+    </edge>
+    <edge id="30658263#0" from="11134510122" to="J1" name="彌敦道 Nathan Road" priority="12" type="highway.primary" spreadType="center" shape="186.60,88.42 170.44,186.02 170.26,187.32">
+        <lane id="30658263#0_0" index="0" speed="27.78" length="99.02" shape="189.76,88.94 173.58,186.64">
+            <param key="origId" value="30658263"/>
+        </lane>
+        <lane id="30658263#0_1" index="1" speed="27.78" length="99.02" shape="186.60,88.42 170.43,186.12">
+            <param key="origId" value="30658263"/>
+        </lane>
+        <lane id="30658263#0_2" index="2" speed="27.78" length="99.02" shape="183.44,87.90 167.27,185.59">
+            <param key="origId" value="30658263"/>
+        </lane>
+        <param key="origTo" value="1151084822"/>
+    </edge>
+    <edge id="697558563#0" from="1297032845" to="11134510123" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="371.21,365.36 365.54,357.54 361.44,351.89 352.97,340.20 335.16,315.65 328.12,306.03 324.46,301.29 319.73,294.73 314.42,287.20 309.97,280.49 304.51,273.04 297.49,262.90 293.20,256.42 289.01,249.59 284.16,242.86 277.85,233.59 273.74,227.13 268.64,219.78 262.61,213.22 253.24,209.88">
+        <lane id="697558563#0_0" index="0" speed="27.78" length="196.84" shape="368.62,367.24 362.95,359.42 358.85,353.77 350.38,342.08 332.57,317.53 325.56,307.95 321.90,303.20 317.12,296.59 311.78,289.01 307.34,282.32 301.90,274.90 294.84,264.69 290.50,258.14 286.34,251.36 281.54,244.70 275.18,235.35 271.07,228.90 266.14,221.78 260.79,215.97 252.31,212.95">
+            <param key="origId" value="697558563"/>
+        </lane>
+        <lane id="697558563#0_1" index="1" speed="27.78" length="196.84" shape="371.21,365.36 365.54,357.54 361.44,351.89 352.97,340.20 335.16,315.65 328.12,306.03 324.46,301.29 319.73,294.73 314.42,287.20 309.97,280.49 304.51,273.04 297.49,262.90 293.20,256.42 289.01,249.59 284.16,242.86 277.85,233.59 273.74,227.13 268.64,219.78 262.61,213.22 253.38,209.93">
+            <param key="origId" value="697558563"/>
+        </lane>
+        <lane id="697558563#0_2" index="2" speed="27.78" length="196.84" shape="373.80,363.48 368.13,355.66 364.03,350.01 355.56,338.32 337.75,313.77 330.68,304.11 327.02,299.38 322.34,292.87 317.06,285.39 312.60,278.66 307.12,271.18 300.14,261.11 295.90,254.70 291.68,247.82 286.78,241.02 280.52,231.83 276.41,225.36 271.14,217.78 264.43,210.47 254.46,206.92">
+            <param key="origId" value="697558563"/>
+        </lane>
+    </edge>
+    <edge id="947251213" from="8768492967" to="8201906508" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center">
+        <lane id="947251213_0" index="0" speed="27.78" length="22.88" shape="79.37,186.86 101.97,190.49">
+            <param key="origId" value="947251213"/>
+        </lane>
+        <lane id="947251213_1" index="1" speed="27.78" length="22.88" shape="78.87,190.02 101.46,193.65">
+            <param key="origId" value="947251213"/>
+        </lane>
+        <lane id="947251213_2" index="2" speed="27.78" length="22.88" shape="78.36,193.18 100.96,196.81">
+            <param key="origId" value="947251213"/>
+        </lane>
+    </edge>
+    <edge id="947251214#0" from="1151084837" to="8768492967" name="窩打老道 Waterloo Road" priority="12" type="highway.primary" spreadType="center" shape="46.29,184.89 57.40,186.68 78.72,190.00">
+        <lane id="947251214#0_0" index="0" speed="27.78" length="32.68" shape="46.80,181.73 57.90,183.52 79.06,186.82">
+            <param key="origId" value="947251214"/>
+        </lane>
+        <lane id="947251214#0_1" index="1" speed="27.78" length="32.68" shape="46.29,184.89 57.40,186.68 78.57,189.98">
+            <param key="origId" value="947251214"/>
+        </lane>
+        <lane id="947251214#0_2" index="2" speed="27.78" length="32.68" shape="45.78,188.05 56.90,189.84 78.08,193.14">
+            <param key="origId" value="947251214"/>
+        </lane>
+    </edge>
+    <edge id="960661806#0" from="11134510116" to="J1" name="彌敦道 Nathan Road" priority="12" type="highway.primary" spreadType="center" shape="163.58,291.09 166.88,271.53 167.85,265.84 168.50,261.99 169.16,258.12 173.27,233.83 173.86,230.33 176.12,216.93">
+        <lane id="960661806#0_0" index="0" speed="27.78" length="75.97" shape="160.42,290.56 163.72,271.00 164.70,265.30 165.35,261.45 166.00,257.59 170.11,233.30 170.70,229.80 173.10,215.59">
+            <param key="origId" value="960661806"/>
+        </lane>
+        <lane id="960661806#0_1" index="1" speed="27.78" length="75.97" shape="163.58,291.09 166.88,271.53 167.85,265.84 168.50,261.99 169.16,258.12 173.27,233.83 173.86,230.33 176.25,216.18">
+            <param key="origId" value="960661806"/>
+        </lane>
+        <lane id="960661806#0_2" index="2" speed="27.78" length="75.97" shape="166.74,291.62 170.04,272.06 171.00,266.38 171.65,262.53 172.32,258.65 176.43,234.36 177.02,230.86 179.39,216.76">
+            <param key="origId" value="960661806"/>
+        </lane>
+        <param key="origTo" value="1151084876"/>
+    </edge>
+    <edge id="987256888#0" from="8201906508" to="1151084864" name="砵蘭街 Portland Street" priority="10" type="highway.tertiary" spreadType="center" shape="106.85,194.51 106.66,195.96 106.30,198.26 106.11,199.32 105.87,200.86 93.57,272.68 92.36,279.72 91.32,285.82 90.77,289.00 89.77,294.99 80.06,353.07 78.50,362.37">
+        <lane id="987256888#0_0" index="0" speed="22.22" length="161.49" shape="105.48,203.15 93.57,272.68 92.36,279.72 91.32,285.82 90.77,289.00 89.77,294.99 80.06,353.07 78.50,362.37">
+            <param key="origId" value="987256888"/>
+        </lane>
+    </edge>
+    <edge id="99517942#0" from="991294801" to="276373355" name="砵蘭街 Portland Street" priority="10" type="highway.tertiary" spreadType="center" shape="134.38,70.82 133.37,77.26 128.40,109.16 117.35,176.52 115.94,185.05">
+        <lane id="99517942#0_0" index="0" speed="22.22" length="106.92" shape="134.38,70.82 133.37,77.26 128.40,109.16 117.37,176.37">
+            <param key="origId" value="99517942"/>
+        </lane>
+    </edge>
+
+    <tlLogic id="J1" type="static" programID="0" offset="0">
+        <phase duration="30" state="GGGGrrrrrrrrrrr"/>
+        <phase duration="3"  state="yyyyrrrrrrrrrrr"/>
+        <phase duration="30" state="rrrrGGGGGrrrrrr"/>
+        <phase duration="3"  state="rrrryyyyyrrrrrr"/>
+        <phase duration="30" state="rrrrrrrrrGGGrrr"/>
+        <phase duration="3"  state="rrrrrrrrryyyrrr"/>
+        <phase duration="30" state="rrrrrrrrrrrrGGG"/>
+        <phase duration="3"  state="rrrrrrrrrrrryyy"/>
+    </tlLogic>
+
+    <junction id="11134510116" type="dead_end" x="163.58" y="291.09" incLanes="" intLanes="" shape="168.31,291.89 158.85,290.29"/>
+    <junction id="11134510122" type="dead_end" x="186.60" y="88.42" incLanes="" intLanes="" shape="181.86,87.64 191.34,89.20"/>
+    <junction id="11134510123" type="priority" x="253.24" y="209.88" incLanes="697558563#0_0 697558563#0_1 697558563#0_2" intLanes=":11134510123_0_0 :11134510123_0_1 :11134510123_0_2" shape="251.77,214.45 255.00,205.41 254.57,205.27 251.61,214.40">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="11234081814" type="dead_end" x="455.34" y="500.19" incLanes="102640432#3_0 102640432#3_1 102640432#3_2" intLanes="" shape="459.16,497.29 451.52,503.09"/>
+    <junction id="1151084825" type="dead_end" x="139.00" y="373.40" incLanes="102640453#0_0 102640453#0_1 102640453#0_2" intLanes="" shape="143.75,374.11 134.25,372.69"/>
+    <junction id="1151084837" type="dead_end" x="46.29" y="184.89" incLanes="" intLanes="" shape="45.53,189.63 47.05,180.15"/>
+    <junction id="1151084864" type="dead_end" x="78.50" y="362.37" incLanes="987256888#0_0" intLanes="" shape="80.08,362.63 76.92,362.11"/>
+    <junction id="1151084917" type="priority" x="242.81" y="218.61" incLanes="102640432#0_0 102640432#0_1 102640432#0_2" intLanes=":1151084917_0_0 :1151084917_0_1 :1151084917_0_2 :1151084917_3_0" shape="247.41,225.08 250.15,215.87 247.61,215.05 245.73,214.49 244.15,214.09 242.56,213.76 240.62,213.42 238.07,213.00 236.56,222.48 238.67,223.29 239.35,224.00 239.77,224.90 239.93,226.00 239.84,227.31 243.01,227.79 243.77,225.73 244.41,225.13 245.24,224.83 246.23,224.81">
+        <request index="0" response="0000" foes="0000" cont="0"/>
+        <request index="1" response="0000" foes="0000" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
+    <junction id="1297032845" type="dead_end" x="371.21" y="365.36" incLanes="" intLanes="" shape="375.10,362.54 367.32,368.18"/>
+    <junction id="276372857" type="dead_end" x="0.00" y="166.33" incLanes="102640412#2_0 102640412#2_1 102640412#2_2" intLanes="" shape="-0.81,171.06 0.81,161.60"/>
+    <junction id="276373355" type="priority" x="115.94" y="185.05" incLanes="102640412#0.25_0 102640412#0.25_1 102640412#0.25_2 99517942#0_0" intLanes=":276373355_0_0 :276373355_0_1 :276373355_0_2 :276373355_3_0 :276373355_3_1" shape="120.51,190.76 122.23,181.31 120.12,180.48 119.45,179.79 119.03,178.92 118.86,177.87 118.95,176.64 115.80,176.11 115.00,178.23 114.32,178.91 113.47,179.33 112.43,179.50 111.20,179.41 109.65,188.88">
+        <request index="0" response="00000" foes="11000" cont="0"/>
+        <request index="1" response="00000" foes="11000" cont="0"/>
+        <request index="2" response="00000" foes="11000" cont="0"/>
+        <request index="3" response="00111" foes="00111" cont="0"/>
+        <request index="4" response="00111" foes="00111" cont="0"/>
+    </junction>
+    <junction id="6834003674" type="dead_end" x="228.44" y="311.42" incLanes="102640429_0" intLanes="" shape="230.02,311.66 226.86,311.18"/>
+    <junction id="8201906508" type="priority" x="106.85" y="194.51" incLanes="947251213_0 947251213_1 947251213_2" intLanes=":8201906508_0_0 :8201906508_0_1 :8201906508_0_2 :8201906508_3_0" shape="111.53,200.16 113.11,190.69 102.22,188.91 100.70,198.39 102.77,199.17 103.43,199.83 103.84,200.68 103.99,201.72 103.89,202.94 107.07,203.35 107.86,201.29 108.51,200.63 109.34,200.22 110.35,200.07">
+        <request index="0" response="0000" foes="0000" cont="0"/>
+        <request index="1" response="0000" foes="0000" cont="0"/>
+        <request index="2" response="0000" foes="0000" cont="0"/>
+        <request index="3" response="0000" foes="0000" cont="0"/>
+    </junction>
+    <junction id="8768492967" type="priority" x="78.72" y="190.00" incLanes="947251214#0_0 947251214#0_1 947251214#0_2" intLanes=":8768492967_0_0 :8768492967_0_1 :8768492967_0_2" shape="78.11,194.76 79.63,185.28 79.31,185.23 77.83,194.72">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="9125470662" type="dead_end" x="211.46" y="0.00" incLanes="102640426#0_0 102640426#0_1 102640426#0_2" intLanes="" shape="206.71,-0.72 216.21,0.72"/>
+    <junction id="991294801" type="dead_end" x="134.38" y="70.82" incLanes="" intLanes="" shape="132.80,70.57 135.96,71.07"/>
+    <junction id="J0" type="priority" x="132.58" y="188.07" incLanes="102640412#0_0 102640412#0_1" intLanes=":J0_0_0 :J0_0_1 :J0_0_2" shape="135.76,193.27 136.91,186.97 134.07,185.68 132.40,183.94 131.27,183.18 129.56,182.64 127.85,192.09">
+        <request index="0" response="000" foes="000" cont="0"/>
+        <request index="1" response="000" foes="000" cont="0"/>
+        <request index="2" response="000" foes="000" cont="0"/>
+    </junction>
+    <junction id="J1" type="traffic_light" x="173.44" y="201.18" incLanes="1200878753#0_0 1200878753#0_1 1200878753#0_2 30658263#0_0 30658263#0_1 30658263#0_2 102454134#0_0 102454134#0_1 102454134#0_2 960661806#0_0 960661806#0_1 960661806#0_2" intLanes=":J1_0_0 :J1_0_1 :J1_2_0 :J1_2_1 :J1_4_0 :J1_4_1 :J1_6_0 :J1_6_1 :J1_6_2 :J1_9_0 :J1_9_1 :J1_9_2 :J1_12_0 :J1_12_1 :J1_12_2" shape="188.58,189.11 161.00,184.56 156.48,212.51 184.01,217.62" customShape="1">
+        <request index="0"  response="000000000000000" foes="111000111000000" cont="0"/>
+        <request index="1"  response="000000000000000" foes="111000111000000" cont="0"/>
+        <request index="2"  response="000000000000000" foes="111111111000000" cont="0"/>
+        <request index="3"  response="000111000000000" foes="111111111000000" cont="0"/>
+        <request index="4"  response="000111000000000" foes="000111000000000" cont="0"/>
+        <request index="5"  response="000000000000000" foes="000111000000000" cont="0"/>
+        <request index="6"  response="000000000000000" foes="000111000001111" cont="0"/>
+        <request index="7"  response="000111000001111" foes="000111000001111" cont="0"/>
+        <request index="8"  response="000111000001111" foes="000111000001111" cont="0"/>
+        <request index="9"  response="000000000000000" foes="111000111111100" cont="0"/>
+        <request index="10" response="000000000000000" foes="111000111111100" cont="0"/>
+        <request index="11" response="000000000000000" foes="111000111111100" cont="0"/>
+        <request index="12" response="000111000001111" foes="000111000001111" cont="0"/>
+        <request index="13" response="000111000001111" foes="000111000001111" cont="0"/>
+        <request index="14" response="000111000001111" foes="000111000001111" cont="0"/>
+        <param key="origEdgeIds" value="102640417 102640434 250489279 311890779"/>
+        <param key="origId" value="1151084802 1151084822 1151084876 33004488"/>
+    </junction>
+
+    <connection from="102454134#0" to="102640432#0" fromLane="0" toLane="0" via=":J1_9_0" tl="J1" linkIndex="9" dir="s" state="O"/>
+    <connection from="102454134#0" to="102640432#0" fromLane="1" toLane="1" via=":J1_9_1" tl="J1" linkIndex="10" dir="s" state="O"/>
+    <connection from="102454134#0" to="102640432#0" fromLane="2" toLane="2" via=":J1_9_2" tl="J1" linkIndex="11" dir="s" state="O"/>
+    <connection from="102640412#0" to="102640412#0.25" fromLane="0" toLane="0" via=":J0_0_0" dir="s" state="M"/>
+    <connection from="102640412#0" to="102640412#0.25" fromLane="1" toLane="1" via=":J0_0_1" dir="s" state="M"/>
+    <connection from="102640412#0" to="102640412#0.25" fromLane="1" toLane="2" via=":J0_0_2" dir="s" state="M"/>
+    <connection from="102640412#0.25" to="102640412#2" fromLane="0" toLane="0" via=":276373355_0_0" dir="s" state="M"/>
+    <connection from="102640412#0.25" to="102640412#2" fromLane="1" toLane="1" via=":276373355_0_1" dir="s" state="M"/>
+    <connection from="102640412#0.25" to="102640412#2" fromLane="2" toLane="2" via=":276373355_0_2" dir="s" state="M"/>
+    <connection from="102640432#0" to="102640432#3" fromLane="0" toLane="0" via=":1151084917_0_0" dir="s" state="M"/>
+    <connection from="102640432#0" to="102640432#3" fromLane="1" toLane="1" via=":1151084917_0_1" dir="s" state="M"/>
+    <connection from="102640432#0" to="102640432#3" fromLane="2" toLane="2" via=":1151084917_0_2" dir="s" state="M"/>
+    <connection from="102640432#0" to="102640429" fromLane="2" toLane="0" via=":1151084917_3_0" dir="l" state="M"/>
+    <connection from="1200878753#0" to="102640412#0" fromLane="0" toLane="0" via=":J1_0_0" tl="J1" linkIndex="0" dir="s" state="O"/>
+    <connection from="1200878753#0" to="102640412#0" fromLane="1" toLane="1" via=":J1_0_1" tl="J1" linkIndex="1" dir="s" state="O"/>
+    <connection from="1200878753#0" to="102640426#0" fromLane="2" toLane="1" pass="1" via=":J1_2_0" tl="J1" linkIndex="2" dir="l" state="O"/>
+    <connection from="1200878753#0" to="102640426#0" fromLane="2" toLane="2" via=":J1_2_1" tl="J1" linkIndex="3" dir="l" state="o"/>
+    <connection from="30658263#0" to="102640432#0" fromLane="0" toLane="0" via=":J1_4_0" tl="J1" linkIndex="4" dir="r" state="o"/>
+    <connection from="30658263#0" to="102640432#0" fromLane="0" toLane="1" pass="1" via=":J1_4_1" tl="J1" linkIndex="5" dir="r" state="O"/>
+    <connection from="30658263#0" to="102640453#0" fromLane="1" toLane="0" pass="1" via=":J1_6_0" tl="J1" linkIndex="6" dir="s" state="O"/>
+    <connection from="30658263#0" to="102640453#0" fromLane="1" toLane="1" via=":J1_6_1" tl="J1" linkIndex="7" dir="s" state="o"/>
+    <connection from="30658263#0" to="102640453#0" fromLane="2" toLane="2" via=":J1_6_2" tl="J1" linkIndex="8" dir="s" state="o"/>
+    <connection from="697558563#0" to="1200878753#0" fromLane="0" toLane="0" via=":11134510123_0_0" dir="s" state="M"/>
+    <connection from="697558563#0" to="1200878753#0" fromLane="1" toLane="1" via=":11134510123_0_1" dir="s" state="M"/>
+    <connection from="697558563#0" to="1200878753#0" fromLane="2" toLane="2" via=":11134510123_0_2" dir="s" state="M"/>
+    <connection from="947251213" to="102454134#0" fromLane="0" toLane="0" via=":8201906508_0_0" dir="s" state="M"/>
+    <connection from="947251213" to="102454134#0" fromLane="1" toLane="1" via=":8201906508_0_1" dir="s" state="M"/>
+    <connection from="947251213" to="102454134#0" fromLane="2" toLane="2" via=":8201906508_0_2" dir="s" state="M"/>
+    <connection from="947251213" to="987256888#0" fromLane="2" toLane="0" via=":8201906508_3_0" dir="l" state="M"/>
+    <connection from="947251214#0" to="947251213" fromLane="0" toLane="0" via=":8768492967_0_0" dir="s" state="M"/>
+    <connection from="947251214#0" to="947251213" fromLane="1" toLane="1" via=":8768492967_0_1" dir="s" state="M"/>
+    <connection from="947251214#0" to="947251213" fromLane="2" toLane="2" via=":8768492967_0_2" dir="s" state="M"/>
+    <connection from="960661806#0" to="102640426#0" fromLane="0" toLane="0" via=":J1_12_0" tl="J1" linkIndex="12" dir="s" state="o"/>
+    <connection from="960661806#0" to="102640426#0" fromLane="1" toLane="1" via=":J1_12_1" tl="J1" linkIndex="13" dir="s" state="o"/>
+    <connection from="960661806#0" to="102640426#0" fromLane="2" toLane="2" via=":J1_12_2" tl="J1" linkIndex="14" dir="s" state="o"/>
+    <connection from="99517942#0" to="102640412#2" fromLane="0" toLane="1" via=":276373355_3_0" dir="l" state="m"/>
+    <connection from="99517942#0" to="102640412#2" fromLane="0" toLane="2" via=":276373355_3_1" dir="l" state="m"/>
+
+    <connection from=":11134510123_0" to="1200878753#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":11134510123_0" to="1200878753#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":11134510123_0" to="1200878753#0" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":1151084917_0" to="102640432#3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":1151084917_0" to="102640432#3" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":1151084917_0" to="102640432#3" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":1151084917_3" to="102640429" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":276373355_0" to="102640412#2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":276373355_0" to="102640412#2" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":276373355_0" to="102640412#2" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":276373355_3" to="102640412#2" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":276373355_3" to="102640412#2" fromLane="1" toLane="2" dir="l" state="M"/>
+    <connection from=":8201906508_0" to="102454134#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":8201906508_0" to="102454134#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":8201906508_0" to="102454134#0" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":8201906508_3" to="987256888#0" fromLane="0" toLane="0" dir="l" state="M"/>
+    <connection from=":8768492967_0" to="947251213" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":8768492967_0" to="947251213" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":8768492967_0" to="947251213" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":J0_0" to="102640412#0.25" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J0_0" to="102640412#0.25" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J0_0" to="102640412#0.25" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":J1_0" to="102640412#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J1_0" to="102640412#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J1_2" to="102640426#0" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":J1_2" to="102640426#0" fromLane="1" toLane="2" dir="l" state="M"/>
+    <connection from=":J1_4" to="102640432#0" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":J1_4" to="102640432#0" fromLane="1" toLane="1" dir="r" state="M"/>
+    <connection from=":J1_6" to="102640453#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J1_6" to="102640453#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J1_6" to="102640453#0" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":J1_9" to="102640432#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J1_9" to="102640432#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J1_9" to="102640432#0" fromLane="2" toLane="2" dir="s" state="M"/>
+    <connection from=":J1_12" to="102640426#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J1_12" to="102640426#0" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J1_12" to="102640426#0" fromLane="2" toLane="2" dir="s" state="M"/>
+
+</net>
