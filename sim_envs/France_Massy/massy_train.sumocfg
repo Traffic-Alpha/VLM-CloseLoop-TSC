@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2024-11-12 21:02:08 by Eclipse SUMO sumo Version 1.20.0
+-->
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="./env/massy.net.xml"/>
+        <route-files value="./env/massy.rou.xml"/>
+        <additional-files value="./add/e2.add.xml"/>
+    </input>
+
+</configuration>

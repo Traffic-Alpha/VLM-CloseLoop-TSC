@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-04-21 18:08:33 by Eclipse SUMO netedit Version 1.22.0
+<neteditConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/neteditConfiguration.xsd">
+
+    <input>
+        <sumocfg-file value="Massy.sumocfg"/>
+        <additional-files value="./add/massy.poly.xml"/>
+        <route-files value=""/>
+        <sumo-net-file value="./env/massy.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="./env/massy.net.xml"/>
+        <output.street-names value="true"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="0"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.50"/>
+        <rectangular-lane-cut value="0"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="0"/>
+    </pedestrian>
+
+    <netedit>
+        <ignore.routeelements value="false"/>
+    </netedit>
+
+</neteditConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="-444963.88,-5397182.80" convBoundary="0.00,0.00,311.95,391.78" origBoundary="2.251645,48.725267,2.255896,48.728773" projParameter="+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"/>
+
+    <type id="highway.residential" priority="3" numLanes="2" speed="13.89" oneway="0"/>
+
+    <edge id=":INT1_0" function="internal">
+        <lane id=":INT1_0_0" index="0" speed="8.33" length="19.71" shape="183.44,238.94 175.00,256.75"/>
+    </edge>
+    <edge id=":INT1_1" function="internal">
+        <lane id=":INT1_1_0" index="0" speed="8.33" length="19.44" shape="180.60,237.48 177.54,241.87 173.82,244.21 169.45,244.52 164.43,242.78"/>
+    </edge>
+    <edge id=":INT1_2" function="internal">
+        <lane id=":INT1_2_0" index="0" speed="6.71" length="9.73" shape="166.67,236.74 169.31,237.69 171.56,237.65 173.43,236.60 174.91,234.54"/>
+    </edge>
+    <edge id=":INT1_3" function="internal">
+        <lane id=":INT1_3_0" index="0" speed="8.33" length="19.42" shape="165.55,239.76 170.27,242.97 172.91,246.68 173.49,250.88 172.01,255.57"/>
+    </edge>
+    <edge id=":INT1_4" function="internal">
+        <lane id=":INT1_4_0" index="0" speed="6.50" length="8.98" shape="166.03,253.21 166.77,250.96 166.56,248.98 165.41,247.26 163.31,245.81"/>
+    </edge>
+    <edge id=":INT1_5" function="internal">
+        <lane id=":INT1_5_0" index="0" speed="8.33" length="20.35" shape="169.02,254.39 177.75,236.01"/>
+    </edge>
+    <edge id=":J0_0" function="internal">
+        <lane id=":J0_0_0" index="0" speed="8.33" length="0.10" shape="114.02,209.58 114.02,209.58"/>
+        <lane id=":J0_0_1" index="1" speed="8.33" length="0.10" shape="112.55,212.43 112.55,212.43"/>
+    </edge>
+    <edge id=":J1_0" function="internal">
+        <lane id=":J1_0_0" index="0" speed="8.33" length="0.30" shape="132.75,311.84 132.83,311.57"/>
+        <lane id=":J1_0_1" index="1" speed="8.33" length="0.30" shape="135.80,312.81 135.89,312.52"/>
+    </edge>
+    <edge id=":J2_0" function="internal">
+        <lane id=":J2_0_0" index="0" speed="8.33" length="0.10" shape="229.41,152.87 229.41,152.87"/>
+        <lane id=":J2_0_1" index="1" speed="8.33" length="0.10" shape="226.60,151.35 226.60,151.35"/>
+    </edge>
+
+    <edge id="-172801130" from="INT1" to="290519002" name="Rue Georges Ritz" priority="3" type="highway.residential" shape="174.79,245.35 168.11,242.88 122.98,219.61 111.20,213.53 103.46,206.72 94.31,194.65 84.37,181.55 57.80,146.55 54.63,142.38 43.58,127.83 38.31,120.88 27.84,107.09 5.42,76.55 0.00,69.22">
+        <lane id="-172801130_0" index="0" speed="8.33" length="244.78" shape="163.31,245.81 120.78,223.88 108.47,217.52 99.93,210.00 90.49,197.55 80.55,184.45 53.98,149.45 50.81,145.28 39.76,130.73 34.49,123.78 23.99,109.96 1.55,79.39 -3.86,72.07">
+            <param key="origId" value="172801130"/>
+        </lane>
+        <lane id="-172801130_1" index="1" speed="8.33" length="244.78" shape="164.43,242.78 122.25,221.03 110.29,214.86 102.28,207.81 93.04,195.62 83.10,182.52 56.53,147.52 53.36,143.35 42.31,128.80 37.04,121.85 26.56,108.05 4.13,77.50 -1.29,70.17">
+            <param key="origId" value="172801130"/>
+        </lane>
+    </edge>
+    <edge id="-172801188#0" from="INT1" to="1836529585" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="174.79,245.35 172.60,250.89 160.73,274.15 152.43,284.22 140.41,306.14 137.51,312.69 133.07,326.77 106.83,386.40 104.67,391.78">
+        <lane id="-172801188#0_0" index="0" speed="8.33" length="152.46" shape="175.00,256.75 164.77,276.80 156.42,286.92 144.72,308.27 142.01,314.39 137.57,328.46 111.26,388.26 109.12,393.57">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="-172801188#0_1" index="1" speed="8.33" length="152.46" shape="172.01,255.57 162.08,275.03 153.76,285.12 141.85,306.85 139.01,313.26 134.57,327.33 108.31,387.02 106.15,392.38">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+    <edge id="-172801188#1" from="137572217" to="J2" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="311.95,0.00 306.56,4.24 292.60,29.50 275.26,59.98 266.84,73.48 225.19,150.59">
+        <lane id="-172801188#1_0" index="0" speed="8.33" length="173.01" shape="314.92,3.77 310.29,7.41 296.79,31.85 279.38,62.44 270.99,75.89 229.41,152.87">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="-172801188#1_1" index="1" speed="8.33" length="173.01" shape="312.94,1.26 307.80,5.30 294.00,30.28 276.63,60.80 268.22,74.28 226.60,151.35">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+    <edge id="-172801188#1.174" from="J2" to="INT1" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="225.19,150.59 211.27,176.36 184.22,226.76 176.59,241.86 174.79,245.35">
+        <lane id="-172801188#1.174_0" index="0" speed="8.33" length="97.61" shape="229.41,152.87 215.50,178.64 188.48,228.98 183.44,238.94">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="-172801188#1.174_1" index="1" speed="8.33" length="97.61" shape="226.60,151.35 212.68,177.12 185.64,227.50 180.60,237.48">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+    <edge id="172801130" from="290519002" to="J0" name="Rue Georges Ritz" priority="3" type="highway.residential" shape="0.00,69.22 5.42,76.55 27.84,107.09 38.31,120.88 43.58,127.83 54.63,142.38 57.80,146.55 84.37,181.55 94.31,194.65 103.46,206.72 111.20,213.53 111.82,213.85">
+        <lane id="172801130_0" index="0" speed="8.33" length="181.62" shape="3.86,66.37 9.28,73.70 31.69,104.22 42.13,117.98 47.40,124.93 58.45,139.48 61.62,143.65 88.19,178.65 98.13,191.75 106.99,203.44 113.93,209.54 114.02,209.58">
+            <param key="origId" value="172801130"/>
+        </lane>
+        <lane id="172801130_1" index="1" speed="8.33" length="181.62" shape="1.29,68.27 6.71,75.60 29.12,106.13 39.58,119.91 44.85,126.86 55.90,141.41 59.07,145.58 85.64,180.58 95.58,193.68 104.64,205.63 112.11,212.20 112.55,212.43">
+            <param key="origId" value="172801130"/>
+        </lane>
+    </edge>
+    <edge id="172801130.183" from="J0" to="INT1" name="Rue Georges Ritz" priority="3" type="highway.residential" shape="111.82,213.85 122.98,219.61 168.11,242.88 174.79,245.35">
+        <lane id="172801130.183_0" index="0" speed="8.33" length="59.44" shape="114.02,209.58 125.18,215.34 166.67,236.74">
+            <param key="origId" value="172801130"/>
+        </lane>
+        <lane id="172801130.183_1" index="1" speed="8.33" length="59.44" shape="112.55,212.43 123.71,218.19 165.55,239.76">
+            <param key="origId" value="172801130"/>
+        </lane>
+    </edge>
+    <edge id="172801188#0" from="1836529585" to="J1" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="104.67,391.78 106.83,386.40 133.07,326.77 137.37,313.14">
+        <lane id="172801188#0_0" index="0" speed="8.33" length="84.84" shape="100.22,389.99 102.40,384.54 128.57,325.08 132.75,311.84">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="172801188#0_1" index="1" speed="8.33" length="84.84" shape="103.19,391.18 105.35,385.78 131.57,326.21 135.80,312.81">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+    <edge id="172801188#0.85" from="J1" to="INT1" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="137.37,313.14 137.51,312.69 140.41,306.14 152.43,284.22 160.73,274.15 172.60,250.89 174.79,245.35">
+        <lane id="172801188#0.85_0" index="0" speed="8.33" length="67.29" shape="132.83,311.57 133.01,311.00 136.10,304.01 148.44,281.52 156.69,271.50 166.03,253.21">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="172801188#0.85_1" index="1" speed="8.33" length="67.29" shape="135.89,312.52 136.01,312.13 138.97,305.43 151.10,283.32 159.38,273.27 169.02,254.39">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+    <edge id="172801188#1" from="INT1" to="137572217" name="Rue Georges Clemenceau" priority="3" type="highway.residential" shape="174.79,245.35 176.59,241.86 184.22,226.76 211.27,176.36 266.84,73.48 275.26,59.98 292.60,29.50 306.56,4.24 311.95,0.00">
+        <lane id="172801188#1_0" index="0" speed="8.33" length="273.40" shape="174.91,234.54 179.96,224.54 207.04,174.08 262.69,71.07 271.14,57.52 288.41,27.15 302.83,1.07 308.98,-3.77">
+            <param key="origId" value="172801188"/>
+        </lane>
+        <lane id="172801188#1_1" index="1" speed="8.33" length="273.40" shape="177.75,236.01 182.80,226.02 209.86,175.60 265.46,72.68 273.89,59.16 291.20,28.72 305.32,3.18 310.96,-1.26">
+            <param key="origId" value="172801188"/>
+        </lane>
+    </edge>
+
+    <tlLogic id="INT1" type="static" programID="0" offset="0">
+        <phase duration="20" state="GGrrrr"/>
+        <phase duration="3"  state="yyrrrr"/>
+        <phase duration="20" state="rrGGrr"/>
+        <phase duration="3"  state="rryyrr"/>
+        <phase duration="20" state="rrrrGG"/>
+        <phase duration="3"  state="rrrryy"/>
+    </tlLogic>
+
+    <junction id="137572217" type="dead_end" x="311.95" y="0.00" incLanes="172801188#1_0 172801188#1_1" intLanes="" shape="311.95,0.00 307.99,-5.03 311.95,0.00"/>
+    <junction id="1836529585" type="dead_end" x="104.67" y="391.78" incLanes="-172801188#0_0 -172801188#0_1" intLanes="" shape="104.67,391.78 110.61,394.16 104.67,391.78"/>
+    <junction id="290519002" type="dead_end" x="0.00" y="69.22" incLanes="-172801130_0 -172801130_1" intLanes="" shape="0.00,69.22 -5.15,73.03 0.00,69.22"/>
+    <junction id="INT1" type="traffic_light" x="174.79" y="245.35" incLanes="-172801188#1.174_0 -172801188#1.174_1 172801130.183_0 172801130.183_1 172801188#0.85_0 172801188#0.85_1" intLanes=":INT1_0_0 :INT1_1_0 :INT1_2_0 :INT1_3_0 :INT1_4_0 :INT1_5_0" shape="184.86,239.68 173.49,233.81 171.97,235.60 170.99,236.00 169.88,236.08 168.63,235.82 167.23,235.23 162.75,247.32 164.53,248.72 164.97,249.56 165.12,250.49 164.98,251.51 164.53,252.62 176.49,257.35">
+        <request index="0" response="000000" foes="000000" cont="0"/>
+        <request index="1" response="100000" foes="101000" cont="0"/>
+        <request index="2" response="000000" foes="000000" cont="0"/>
+        <request index="3" response="100010" foes="100010" cont="0"/>
+        <request index="4" response="000000" foes="000000" cont="0"/>
+        <request index="5" response="000000" foes="001010" cont="0"/>
+    </junction>
+    <junction id="J0" type="priority" x="111.82" y="213.85" incLanes="172801130_0 172801130_1" intLanes=":J0_0_0 :J0_0_1" shape="111.82,213.85 114.76,208.16 111.82,213.85">
+        <request index="0" response="00" foes="00" cont="0"/>
+        <request index="1" response="00" foes="00" cont="0"/>
+    </junction>
+    <junction id="J1" type="priority" x="137.37" y="313.14" incLanes="172801188#0_0 172801188#0_1" intLanes=":J1_0_0 :J1_0_1" shape="137.42,312.99 131.31,311.09 131.22,311.36 137.32,313.29">
+        <request index="0" response="00" foes="00" cont="0"/>
+        <request index="1" response="00" foes="00" cont="0"/>
+    </junction>
+    <junction id="J2" type="priority" x="225.19" y="150.59" incLanes="-172801188#1_0 -172801188#1_1" intLanes=":J2_0_0 :J2_0_1" shape="230.82,153.63 225.19,150.59 230.82,153.63">
+        <request index="0" response="00" foes="00" cont="0"/>
+        <request index="1" response="00" foes="00" cont="0"/>
+    </junction>
+
+    <connection from="-172801188#1" to="-172801188#1.174" fromLane="0" toLane="0" via=":J2_0_0" dir="s" state="M"/>
+    <connection from="-172801188#1" to="-172801188#1.174" fromLane="1" toLane="1" via=":J2_0_1" dir="s" state="M"/>
+    <connection from="-172801188#1.174" to="-172801188#0" fromLane="0" toLane="0" via=":INT1_0_0" tl="INT1" linkIndex="0" dir="s" state="O"/>
+    <connection from="-172801188#1.174" to="-172801130" fromLane="1" toLane="1" via=":INT1_1_0" tl="INT1" linkIndex="1" dir="l" state="o"/>
+    <connection from="172801130" to="172801130.183" fromLane="0" toLane="0" via=":J0_0_0" dir="s" state="M"/>
+    <connection from="172801130" to="172801130.183" fromLane="1" toLane="1" via=":J0_0_1" dir="s" state="M"/>
+    <connection from="172801130.183" to="172801188#1" fromLane="0" toLane="0" via=":INT1_2_0" tl="INT1" linkIndex="2" dir="r" state="O"/>
+    <connection from="172801130.183" to="-172801188#0" fromLane="1" toLane="1" via=":INT1_3_0" tl="INT1" linkIndex="3" dir="l" state="o"/>
+    <connection from="172801188#0" to="172801188#0.85" fromLane="0" toLane="0" via=":J1_0_0" dir="s" state="M"/>
+    <connection from="172801188#0" to="172801188#0.85" fromLane="1" toLane="1" via=":J1_0_1" dir="s" state="M"/>
+    <connection from="172801188#0.85" to="-172801130" fromLane="0" toLane="0" via=":INT1_4_0" tl="INT1" linkIndex="4" dir="r" state="O"/>
+    <connection from="172801188#0.85" to="172801188#1" fromLane="1" toLane="1" via=":INT1_5_0" tl="INT1" linkIndex="5" dir="s" state="O"/>
+
+    <connection from=":INT1_0" to="-172801188#0" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":INT1_1" to="-172801130" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":INT1_2" to="172801188#1" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":INT1_3" to="-172801188#0" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":INT1_4" to="-172801130" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":INT1_5" to="172801188#1" fromLane="0" toLane="1" dir="s" state="M"/>
+    <connection from=":J0_0" to="172801130.183" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J0_0" to="172801130.183" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J1_0" to="172801188#0.85" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J1_0" to="172801188#0.85" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":J2_0" to="-172801188#1.174" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":J2_0" to="-172801188#1.174" fromLane="1" toLane="1" dir="s" state="M"/>
+
+</net>
