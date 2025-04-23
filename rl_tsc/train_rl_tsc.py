@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-22 14:20:07
-LastEditTime: 2025-04-22 19:38:09
+LastEditTime: 2025-04-23 11:46:47
 LastEditors: Maonan Wang
 Description: 使用强化学习训练单路口控制
 FilePath: /VLM-CloseLoop-TSC/rl_tsc/train_rl_tsc.py
@@ -25,12 +25,11 @@ logger.remove()
 set_logger(path_convert('./'), file_log_level="INFO")
 
 # 全局变量
-TOTAL_ENVS = 4 # 同时开启的环境数量
+TOTAL_ENVS = 10 # 同时开启的环境数量
 SCENARIO_NAME = "Hongkong_YMT" # 可视化场景
 NETFILE = "ymt_train" # sumocfg 文件
 JUNCTION_NAME = "J1"
-CENTER_COORDINATES = (172, 201, 100)
-PHASE_NUMBER = 6 # 绿灯相位数量
+PHASE_NUMBER = 4 # 绿灯相位数量
 
 if __name__ == '__main__':
     log_path = path_convert('./log/')
