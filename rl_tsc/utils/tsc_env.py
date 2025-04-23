@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2023-09-04 20:43:53
 @Description: 信号灯控制环境
-@LastEditTime: 2023-09-13 16:15:50
+LastEditTime: 2025-04-23 12:50:23
 '''
 import gymnasium as gym
 
@@ -10,7 +10,11 @@ from typing import List, Dict
 from tshub.tshub_env.tshub_env import TshubEnvironment
 
 class TSCEnvironment(gym.Env):
-    def __init__(self, sumo_cfg:str, num_seconds:int, tls_ids:List[str], tls_action_type:str, use_gui:bool=False) -> None:
+    def __init__(self, 
+                 sumo_cfg:str, num_seconds:int, tls_ids:List[str], 
+                 tls_action_type:str, use_gui:bool=False, 
+                 trip_info:str=None, tls_state_add:List=None,
+                ) -> None:
         super().__init__()
 
         self.tsc_env = TshubEnvironment(
@@ -19,6 +23,8 @@ class TSCEnvironment(gym.Env):
             is_vehicle_builder_initialized=True, # 用于获得 vehicle 的 waiting time 来计算 reward
             is_traffic_light_builder_initialized=True,
             tls_ids=tls_ids, 
+            trip_info=trip_info, # 输出 tripinfo
+            tls_state_add=tls_state_add, # 输出信号灯变化
             num_seconds=num_seconds,
             tls_action_type=tls_action_type,
             use_gui=use_gui,
