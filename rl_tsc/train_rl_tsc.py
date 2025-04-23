@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-22 14:20:07
-LastEditTime: 2025-04-23 11:46:47
+LastEditTime: 2025-04-23 15:32:31
 LastEditors: Maonan Wang
 Description: 使用强化学习训练单路口控制
 FilePath: /VLM-CloseLoop-TSC/rl_tsc/train_rl_tsc.py
@@ -55,7 +55,7 @@ if __name__ == '__main__':
         'log_file':log_path,
     }
     env = SubprocVecEnv([make_env(env_index=f'{i}', **params) for i in range(TOTAL_ENVS)])
-    env = VecNormalize(env, norm_obs=False, norm_reward=True)
+    env = VecNormalize(env, norm_obs=False, norm_reward=True) # 对 obs 是没有 normalization 的
 
     # #########
     # Callback
