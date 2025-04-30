@@ -1,10 +1,10 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-04-29 13:08:41
+LastEditTime: 2025-04-30 17:53:52
 LastEditors: Maonan Wang
 Description: VLA TSC (根据传感器图像进行决策)
-FilePath: /VLM-CloseLoop-TSC/vla_tsc/decision_3dtsc.py
+FilePath: /VLM-CloseLoop-TSC/vla_tsc_en/decision_3dtsc.py
 '''
 # AI Agents
 import json
@@ -31,6 +31,7 @@ from stable_baselines3.common.vec_env import VecNormalize, SubprocVecEnv
 from tshub.utils.get_abs_path import get_abs_path
 from tshub.utils.init_log import set_logger
 from utils.make_tsc_env import make_env
+from _config import SCENARIO_CONFIGS
 
 def convert_rgb_to_bgr(image):
     # Convert an RGB image to BGR
@@ -48,18 +49,18 @@ def extract_action(response):
     raise ValueError("No number found in the given string.")
 
 # 全局变量
-SCENARIO_NAME = "Hongkong_YMT" # 可视化场景
-NETFILE = "ymt_eval" # sumocfg 文件, 加载 eval 文件
-JUNCTION_NAME = "J1" # sumo net 对应的路口 ID
-PHASE_NUMBER = 4 # 绿灯相位数量
-SENSOR_INDEX_2_PHASE_INDEX = {
-    0:2, 1:3, 2:0, 3:1
-} # 传感器编号和 Traffic Phase 的对应关系
+scenario_key = "Hongkong_YMT" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
+config = SCENARIO_CONFIGS.get(scenario_key) # 获取特定场景的配置
+SCENARIO_NAME = config["SCENARIO_NAME"] # 场景名称
+NETFILE = config["NETFILE"] # sumocfg 文件, 加载 eval 文件
+JUNCTION_NAME = config["JUNCTION_NAME"] # sumo net 对应的路口 ID
+PHASE_NUMBER = config["PHASE_NUMBER"] # 绿灯相位数量
+SENSOR_INDEX_2_PHASE_INDEX = config["SENSOR_INDEX_2_PHASE_INDEX"] # 传感器与 Traffic Phase 的对应关系
 
 # Init Agents
 concer_case_decision_agent = ConcernCaseAgent(
     name='concer case decision agent',
-    description='你扮演一个在路口指挥交通的警察，当路口存在特殊车辆，例如警车、救护车和消防车等情况需要你来决策。',
+    description='You play the role of a traffic police officer directing traffic at an intersection. When there are special vehicles at the intersection, such as police cars, ambulances, and fire engines, etc., it is up to you to make decisions.',
     llm_cfg=llm_cfg,
     phase_num=PHASE_NUMBER, # 当前路口存在的相位数量
 ) 
@@ -143,7 +144,7 @@ if __name__ == '__main__':
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
                 image_path = path_convert(f"./{JUNCTION_NAME}_{scene_index}.jpg") # 保存的图像数据
                 # 构造多模态输入
-                content = [{"text": "图片为路口摄像头，请你对当前道路进行描述，包括拥堵程度，以及是否存在特殊车辆。如果无法辨别车辆类型，默认是普通车辆。如果存在特殊车辆，你需要进一步判断车辆正在驶入路口还是驶出，是否已经经过了停车线。"}]
+                content = [{"text": "The picture shows a traffic intersection camera. Please describe the current road conditions, including the degree of congestion, and whether there are any special vehicles. If there are no obvious signs, they are ordinary vehicles. Only point out special vehicles when you are absolutely certain. All other vehicles are considered ordinary. If the vehicles are far from the intersection, they do not need to be considered. If there are special vehicles, you need to further determine whether the vehicle is entering the intersection or exiting it, and whether it has passed the stop line. Only vehicles that are entering and are within the intersection need to be considered."}]
                 content.append({'image': image_path})
                 messages.append({
                     'role': 'user',
@@ -166,14 +167,14 @@ if __name__ == '__main__':
             junction_description = ""
             for scene_index, scene_text in junction_mem.items():
                 traffic_phase_index = SENSOR_INDEX_2_PHASE_INDEX[scene_index] # 传感器 Index 转换为 Traffic Phase Index
-                junction_description += f"Traffic Phase-{traffic_phase_index} 对应的交通情况为：{scene_text}；\n"
+                junction_description += f"The traffic situation corresponding to Traffic Phase-{traffic_phase_index} is: {scene_text}\n"
             
             # 构建询问的信息
             messages = []
             messages.append({
                 'role': 'user',
-                'content': f"下面分别是一个十字路口中 {PHASE_NUMBER} 个 Traffic Phase 的描述，请你根据详细的描述总结每个 Traffic Phase 的信息，只需要总结拥堵情况和是否有特殊车辆，需要概况。如果无法辨别车辆类型，默认是普通车辆。不需要疑似特殊车辆。" + \
-                    f"下面是当前每一个 Traffic Phase 详细的描述：\n{junction_description}"
+                'content': f"The following are the descriptions of {PHASE_NUMBER} Traffic Phases at an intersection respectively. Please summarize the information of each Traffic Phase according to the detailed descriptions, focusing only on summarizing the congestion situation and whether there are special vehicles, and make it concise. If the vehicle type cannot be identified, it is defaulted to be an ordinary vehicle. Suspected special vehicles are not needed. " + \
+                    f"The following are the detailed descriptions of each Traffic Phase currently: \n{junction_description}"
             })
             response = []
             response_plain_text = ''
@@ -187,7 +188,7 @@ if __name__ == '__main__':
             messages = []
             messages.append({
                 'role': 'user',
-                'content': f"请你根据当前每一个 Traffic Phase 的状态，做出决策，从而来控制信号灯。当前 Traffic Phase 的信息如下：\n{response[0]['content']}。"
+                'content': f"Please make decisions based on the status of each current Traffic Phase to control the traffic lights. The information of the current Traffic Phase is as follows: \n{response[0]['content']}。"
             })
             response = []
             response_plain_text = ''
