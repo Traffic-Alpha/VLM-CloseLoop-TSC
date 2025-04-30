@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-22 14:20:29
-LastEditTime: 2025-04-23 18:28:27
+LastEditTime: 2025-04-30 13:30:25
 LastEditors: Maonan Wang
 Description: 测试单路口智能体并保存 SUMO Outpuut
 FilePath: /VLM-CloseLoop-TSC/rl_tsc/eval_rl_tsc.py
@@ -14,29 +14,32 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import VecNormalize, SubprocVecEnv
 
 from utils.make_tsc_env import make_env
+from _config import SCENARIO_CONFIGS
 
 path_convert = get_abs_path(__file__)
 logger.remove()
 
 # 全局变量
-SCENARIO_NAME = "Hongkong_YMT" # 可视化场景
-NETFILE = "ymt_eval" # sumocfg 文件, 加载 eval 文件
-JUNCTION_NAME = "J1" # sumo net 对应的路口 ID
-PHASE_NUMBER = 4 # 绿灯相位数量
+scenario_key = "SouthKorea_Songdo" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
+config = SCENARIO_CONFIGS.get(scenario_key) # 获取特定场景的配置
+SCENARIO_NAME = config["SCENARIO_NAME"] # 场景名称
+NETFILE = config["NETFILE"] # sumocfg 文件, 加载 eval 文件
+JUNCTION_NAME = config["JUNCTION_NAME"] # sumo net 对应的路口 ID
+PHASE_NUMBER = config["PHASE_NUMBER"] # 绿灯相位数量
 
 if __name__ == '__main__':
     # #########
     # Init Env
     # #########
     sumo_cfg = path_convert(f"../sim_envs/{SCENARIO_NAME}/{NETFILE}.sumocfg")
-    trip_info = path_convert(f"./results/{SCENARIO_NAME}/sumo_outputs/tripinfo.out.xml")
+    trip_info = path_convert(f"./tripinfo.out.xml")
     tls_add = [
         path_convert(f'../sim_envs/{SCENARIO_NAME}/add/e2.add.xml'), # 探测器
         path_convert(f'../sim_envs/{SCENARIO_NAME}/add/tls_programs.add.xml'), # 信号灯
     ]
     params = {
         'tls_id':JUNCTION_NAME,
-        'num_seconds':600,
+        'num_seconds':800,
         'number_phases':PHASE_NUMBER,
         'sumo_cfg':sumo_cfg,
         'trip_info': trip_info, # 车辆统计信息
