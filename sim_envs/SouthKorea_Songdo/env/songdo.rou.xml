@@ -33,6 +33,7 @@
 
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <vType id="background" length="5.00" color="220,220,220" tau="1.0"/>
+    <vType id="emergency" length="6.50" color="255,165,0" tau="1.0"/>
     <vehicle id="525074961#6__525074961#10__0__background.0" type="background" depart="0.03" departLane="random">
         <route edges="525074961#6 525074961#10"/>
     </vehicle>
@@ -65,6 +66,9 @@
     </vehicle>
     <vehicle id="315156946#0__989312046#2__0__background.0" type="background" depart="5.99" departLane="random">
         <route edges="315156946#0 989312046#2"/>
+    </vehicle>
+    <vehicle id="E1__429770748#1__2__emergency.0" type="emergency" depart="6.01" departLane="random">
+        <route edges="E1 429770748#1"/>
     </vehicle>
     <vehicle id="989312046#0__429770748#1__0__background.0" type="background" depart="6.54" departLane="random">
         <route edges="989312046#0 429770748#1"/>
@@ -539,10 +543,6 @@
     </vehicle>
     <vehicle id="315156946#0__E2__2__background.0" type="background" depart="121.21" departLane="random">
         <route edges="315156946#0 E2"/>
-    </vehicle>
-    <vType id="emergency" length="6.50" color="255,165,0" tau="1.0"/>
-    <vehicle id="525074961#6__525074961#10__2__emergency.0" type="emergency" depart="123.44" departLane="random">
-        <route edges="525074961#6 525074961#10"/>
     </vehicle>
     <vehicle id="525074961#6__525074961#10__2__background.0" type="background" depart="123.47" departLane="random">
         <route edges="525074961#6 525074961#10"/>
