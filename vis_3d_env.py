@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-21 19:04:38
-LastEditTime: 2025-04-22 12:37:21
+LastEditTime: 2025-05-08 20:56:39
 LastEditors: Maonan Wang
 Description: 不同场景的 3D 可视化 (所有 Image 全部保存)
 FilePath: /VLM-CloseLoop-TSC/vis_3d_env.py
@@ -58,6 +58,7 @@ if __name__ == '__main__':
         # 下面是用于渲染的参数
         preset="1080P",
         render_mode="offscreen", # 将结果保存即可
+        should_count_vehicles=True,
         debuger_print_node=False,
         debuger_spin_camera=False,
         sensor_config={
@@ -82,9 +83,12 @@ if __name__ == '__main__':
             'vehicle': dict(),
             'tls': {JUNCTION_NAME: random_phase},
         }
-        obs, reward, info, done, sensor_data = tshub_env3d.step(actions=actions)
+        obs, reward, info, done, sensor_datas = tshub_env3d.step(actions=actions)
+        sensor_data = sensor_datas['image'] # 获得图片数据
+        vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
         i_steps += 1
 
+        print(vehicle_elements) # 3D 场景内车辆的信息
         try:
             # 将 sensor_data 的数据保存为图片
             base_path = path_convert(f"./sensor_outputs/{SCENARIO_NAME}/")
