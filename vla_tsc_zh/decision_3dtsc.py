@@ -1,12 +1,13 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-04-30 17:32:33
+LastEditTime: 2025-05-09 12:00:44
 LastEditors: Maonan Wang
 Description: VLA TSC (根据传感器图像进行决策)
-FilePath: /VLM-CloseLoop-TSC/vla_tsc/decision_3dtsc.py
+FilePath: /VLM-CloseLoop-TSC/vla_tsc_zh/decision_3dtsc.py
 '''
 # AI Agents
+import os
 import json
 from qwen_agent.agents import GroupChat
 from qwen_agent.utils.output_beautify import typewriter_print
@@ -17,7 +18,6 @@ from vlm_agent import (
     ConcernCaseAgent,
     llm_cfg
 )
-
 
 # 3D TSC ENV
 import re
@@ -32,6 +32,11 @@ from tshub.utils.get_abs_path import get_abs_path
 from tshub.utils.init_log import set_logger
 from utils.make_tsc_env import make_env
 from _config import SCENARIO_CONFIGS
+from utils.tools import (
+    save_to_json, 
+    create_folder,
+    append_response_to_file,
+)
 
 def convert_rgb_to_bgr(image):
     # Convert an RGB image to BGR
@@ -47,6 +52,8 @@ def extract_action(response):
     if match:
         return np.array([int(match.group())])
     raise ValueError("No number found in the given string.")
+
+
 
 # 全局变量
 scenario_key = "SouthKorea_Songdo" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
@@ -105,35 +112,59 @@ if __name__ == '__main__':
 
     # Simulation with environment
     obs = env.reset()
-    seneor_data = None # 初始传感器数据为空, 
+    sensor_datas = None # 初始传感器数据为空, 
     dones = False # 默认是 False
+    time_step = 0
 
     while not dones:
         action, _state = model.predict(obs, deterministic=True) # RL 获得的动作
         rl_agent.update_rl_traffic_phase(new_phase=action) # 更新当前 RL 推荐的动作
 
-        if seneor_data is None:
+        # ##########
+        # 新建文件夹 (存储每一个 step 的信息)
+        # ##########
+        time_step += 1
+        _save_folder = path_convert(f"./{SCENARIO_NAME}/{time_step}/")
+        create_folder(_save_folder)
+        _veh_json_file = os.path.join(_save_folder, 'data.json') # 车辆数据
+        _response_txt_file = os.path.join(_save_folder, 'response.txt') # LLM 回复
+
+        if sensor_datas is None:
             obs, rewards, dones, infos = env.step(action)
 
-            # ######################
-            # 获得并保存传感器的数据
-            # ######################
-            seneor_data = infos[0]['pixel']
+            # ##############################
+            # 获得并保存传感器的数据 & 车辆 JSON
+            # ##############################
+            sensor_datas = infos[0]['3d_data']
+
+            # 保存 3D 场景数据
+            vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
+            save_to_json(vehicle_elements, _veh_json_file)
+
+            # 保存图片数据
+            sensor_data = sensor_datas['image'] # 获得图片数据
             for phase_index in range(PHASE_NUMBER):
-                image_path = path_convert(f"./{JUNCTION_NAME}_{phase_index}.jpg") # 保存的图像数据
-                camera_data = seneor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
+                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
+                camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
                 
         else:
             # (1) 保存传感器数据; (2) 场景图片理解; (3) 将图像询问 agents; (3) 使用这里的 decision 与环境交互
 
-            # ########################
-            # (1) 获得并保存传感器的数据
-            # ########################
-            seneor_data = infos[0]['pixel']
+            # ##############################
+            # 获得并保存传感器的数据 & 车辆 JSON
+            # ##############################
+            sensor_datas = infos[0]['3d_data']
+
+            # 保存 3D 场景数据
+            vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
+            save_to_json(vehicle_elements, _veh_json_file)
+
+            # 保存图片数据
+            sensor_data = sensor_datas['image'] # 获得图片数据
             for phase_index in range(PHASE_NUMBER):
-                image_path = path_convert(f"./{JUNCTION_NAME}_{phase_index}.jpg") # 保存的图像数据
-                camera_data = seneor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
+                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
+                camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
             
             # ###############
@@ -142,7 +173,7 @@ if __name__ == '__main__':
             junction_mem = {} # 分别记录多个路口的信息 (一个路口不同方向的信息)
             for scene_index in range(PHASE_NUMBER):
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
-                image_path = path_convert(f"./{JUNCTION_NAME}_{scene_index}.jpg") # 保存的图像数据
+                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
                 # 构造多模态输入
                 content = [{"text": "图片为路口摄像头，请你对当前道路进行描述，包括拥堵程度，以及是否存在特殊车辆。如果没有明显的标志，则为普通车辆，只有十分确定是特殊车辆才进行指出，其余车辆都是普通车辆。如果车辆距离路口较远，也不考虑。如果存在特殊车辆，你需要进一步判断车辆正在驶入路口还是驶出，是否已经经过了停车线。只有驶入且在路口内的车辆才需要考虑。"}]
                 content.append({'image': image_path})
@@ -157,6 +188,8 @@ if __name__ == '__main__':
                 print(f'-->Scene Understand Agent response for Scene-{scene_index}:')
                 for response in scene_understanding_agent.run(messages=messages):
                     response_plain_text = typewriter_print(response, response_plain_text)
+                response_plain_text = f'-->Scene Understand Agent response for Scene-{scene_index}:\n' + response_plain_text
+                append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
                 print('\n---------\n')
                 # Append the bot responses to the chat history.
                 junction_mem[scene_index] = response[0]['content'] # 每个方向的信息
@@ -181,6 +214,7 @@ if __name__ == '__main__':
             print(f'-->Scene Analysis Agent response:')
             for response in scene_analysis_agent.run(messages=messages):
                 response_plain_text = typewriter_print(response, response_plain_text)
+            append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
 
             # ###################
             # (4) 根据场景进行决策
@@ -195,6 +229,7 @@ if __name__ == '__main__':
             print(f'\n-->Group Decision Agent response:')
             for response in group_decision_bots.run(messages=messages, max_round=1):
                 response_plain_text = typewriter_print(response, response_plain_text)
+            append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
 
             # (5) response -> action
             response_dict = json.loads(response[-1]['content'])

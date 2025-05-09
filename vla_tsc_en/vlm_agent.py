@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-04-30 17:53:33
+LastEditTime: 2025-05-08 12:01:07
 LastEditors: Maonan Wang
 Description: VLM Agent, Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
@@ -78,7 +78,7 @@ rl_agent = RLAgent(
 
 # Concer Case Agent (包含 3 个 agent, 以此作决策)
 class ConcernCaseAgent(Agent):
-    """常规场景下决策的 Agents
+    """特殊场景下决策的 Agents
     """
     def __init__(
             self, phase_num:int, llm_cfg:Dict, 

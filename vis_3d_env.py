@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-21 19:04:38
-LastEditTime: 2025-05-08 20:56:39
+LastEditTime: 2025-05-08 21:00:15
 LastEditors: Maonan Wang
 Description: 不同场景的 3D 可视化 (所有 Image 全部保存)
 FilePath: /VLM-CloseLoop-TSC/vis_3d_env.py

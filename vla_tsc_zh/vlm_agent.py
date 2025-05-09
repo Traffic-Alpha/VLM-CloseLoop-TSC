@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-04-29 20:04:56
+LastEditTime: 2025-05-08 12:03:43
 LastEditors: Maonan Wang
 Description: VLM Agent, Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
@@ -9,7 +9,7 @@ Description: VLM Agent, Agents 介绍
 + Group Decision Agents, 不同场景决策 Agents
     + RL Agent, 常规场景下使用 RL 来做出决策
     + Concern Case Agent, 特殊场景进行决策 (决策 + 验证)
-FilePath: /VLM-CloseLoop-TSC/vla_tsc/vlm_agent.py
+FilePath: /VLM-CloseLoop-TSC/vla_tsc_zh/vlm_agent.py
 '''
 import copy
 import json
@@ -78,7 +78,7 @@ rl_agent = RLAgent(
 
 # Concer Case Agent (包含 3 个 agent, 以此作决策)
 class ConcernCaseAgent(Agent):
-    """常规场景下决策的 Agents
+    """特殊场景下决策的 Agents
     """
     def __init__(
             self, phase_num:int, llm_cfg:Dict, 
@@ -111,7 +111,7 @@ class ConcernCaseAgent(Agent):
         new_messages.append(
             Message(
                 'user',
-                [ContentItem(text='请你根据各个 Traffic Phase 的状况给出决策，规则如下：如果存在特殊车辆，例如警车、救护车或是消防车，则优先这个 Traffic Phase；如果不存在特殊车辆，则哪里车辆多就给绿灯。')]
+                [ContentItem(text='请你根据各个 Traffic Phase 的状况给出决策，规则如下：如果存在特殊车辆，例如警车、救护车或是消防车，则优先这个 Traffic Phase；如果不存在特殊车辆，则自行分析判断。')]
             )
         ) # 添加新的问题
         response = []
@@ -124,7 +124,10 @@ class ConcernCaseAgent(Agent):
         new_messages.append(
             Message(
                 'user', 
-                [ContentItem(text=f'请你根据当前的场景来做出决策，返回的数据格式为 JSON，其中 key 分别是 `decision` 和 `explanation`，`decision` 需要包含 Traffic Phase ID。')]
+                [ContentItem(
+                    text=f'请你判断当前的决策是否合规，合规的动作只能是 {self.avaliable_traffic_phase}。' +\
+                        f'如果合规，则按照 JSON 格式返回，其中 key 分别是 `decision` 和 `explanation`，`decision` 需要包含 Traffic Phase ID。'
+                )]
             ))
         for rsp in self.check_agent.run(new_messages, lang=lang, **kwargs):
             yield response + rsp
