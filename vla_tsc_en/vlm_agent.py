@@ -1,9 +1,9 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-05-08 12:01:07
+LastEditTime: 2025-05-09 13:38:44
 LastEditors: Maonan Wang
-Description: VLM Agent, Agents 介绍
+Description: VLM Agent (EN), Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
 + Analysis Agent, 将 N 个方向的信息转换为 Traffic Phase 的信息, 并进行 summay
 + Group Decision Agents, 不同场景决策 Agents
@@ -29,7 +29,7 @@ from utils.llm_config import (
 example_response = json.dumps(
     {
         "decision": "Phase-2",
-        "explanation": "The picture shows a simple road intersection scene, and there are no obvious signs of special vehicles. Therefore, based on the existing information, Phase-2 is the most congested, so set Phase-2 to green. ",
+        "explanation": "The image depicts a basic road intersection scenario with no visible special vehicle markings; based on the available information, Phase-2 shows the heaviest congestion and should therefore be assigned the green light to optimize traffic flow.",
     },
     ensure_ascii=False
 )
@@ -37,16 +37,24 @@ example_response = json.dumps(
 # 场景理解
 scene_understanding_agent = Assistant(
     name='Scene Understanding Agent',
-    description='You play the role of a police officer directing traffic at an intersection. You receive the camera data from a certain direction of the crossroads and need to describe the information of the intersection, including elements of the scene such as the degree of congestion and special events (such as ambulances, police cars). ',
+    description="Act as a traffic police officer managing a cross intersection; you'll receive camera feed data from one direction of the intersection and need to describe the traffic conditions including congestion levels and special situations (such as ambulances or police cars) while focusing on clearly identifiable elements that require immediate attention for effective traffic management.",
     llm=vlm_cfg,
-    system_message="You play the role of a police officer directing traffic at an intersection. You receive the camera data from a certain direction of the crossroads and need to describe the information of the intersection, including elements of the scene such as the degree of congestion and special events (such as ambulances, police cars). " + \
-        "If there are no obvious signs, they are ordinary vehicles. Only point out the vehicles as special ones when you are absolutely certain. "
+    system_message=(
+        "You are now roleplaying as a traffic police officer responsible for monitoring a cross intersection; "
+        "using real-time camera feed data from one direction of the intersection, you must accurately describe the traffic conditions including congestion levels and identify any special vehicles (such as ambulances, police trucks, fire truck). "
+        "All vehicles without identification should be classified as regular vehicles, and only absolutely verifiable emergency vehicles should be reported to ensure reliable traffic management decisions."
+    )
 )
 
 # 场景分析&总结 (将多个摄像头结果和 Traffic Phase 联合起来)
 scene_analysis_agent = Assistant(
     llm=llm_cfg,
-    system_message="Now you are playing the role of a police officer directing traffic at an intersection. You will receive descriptions of multiple intersections. First, please associate the intersection descriptions with the traffic phases, and then summarize the situation of each traffic phase. For example, the congestion situation of each phase and whether there are special vehicles. "
+    system_message=(
+        "You are now roleplaying as a traffic police officer managing multiple intersections; "
+        "you will receive descriptions of these intersections and must first correlate each description with its corresponding traffic phase, "
+        "then summarize the status of every traffic phase including congestion levels and confirmed presence of any special vehicles (only those with clearly identifiable markings), "
+        "providing a concise overview of each phase's critical traffic conditions for effective decision-making."
+    )
 )
 
 # RL Agent, 常规场景下, 返回强化学习的决策
@@ -59,7 +67,7 @@ class RLAgent(Agent):
         rl_response = json.dumps(
             {
                 "decision": f"Phase-{self.rl_traffic_phase[0]}",
-                "explanation": "In the conventional scenario, use the decisions recommended by reinforcement learning.",
+                "explanation": "Under routine traffic conditions, implement the decisions recommended by the reinforcement learning system to optimize traffic flow.",
             },
             ensure_ascii=False
         )
@@ -72,8 +80,8 @@ class RLAgent(Agent):
 
 rl_agent = RLAgent(
     name='normal case decision agent',
-    description='For conventional traffic scenarios, directly call the pre-trained reinforcement learning model.',
-    system_message="In the conventional scenario, directly provide the decision recommended by reinforcement learning."
+    description='Under normal traffic conditions, implement the decisions recommended by the reinforcement learning mode.',
+    system_message="Under routine traffic conditions, implement the decisions recommended by the reinforcement learning mode to optimize traffic flow while maintaining standard safety protocols."
 )
 
 # Concer Case Agent (包含 3 个 agent, 以此作决策)
@@ -85,22 +93,27 @@ class ConcernCaseAgent(Agent):
             *args, **kwargs,
         ):
         super().__init__(*args, **kwargs)
-        self.avaliable_traffic_phase = [f"Phase-{i}" for i in range(phase_num)]
+        self.available_traffic_phase = [f"Phase-{i}" for i in range(phase_num)]
 
         # 根据 Traffic Phase 的结果给出决策
         self.decision_agent = Assistant(
             llm=llm_cfg,
-            system_message='You play the role of a police officer directing traffic at an intersection. You have the traffic situation of each current phase. Please make a decision based on the current scene.' + \
-                'Your goal is to give priority to the passage of special vehicles (ambulances, police cars, fire engines). ' + \
-                'If there are no special vehicles, the goal is to minimize the overall queue length at the intersection.'
+            system_message=(
+                "You are now roleplaying as a traffic police officer managing an intersection with real-time visibility into each traffic phase; "
+                "make operational decisions based on current conditions by prioritizing passage for confirmed emergency vehicles (ambulances, police cars, or fire trucks with clear identifiers), "
+                "and when no special vehicles are present, optimize traffic light timing to minimize intersection congestion through the most efficient flow distribution possible."
+            )
         )
 
         # 检查给出的动作是否符合要求
         self.check_agent = Assistant(
             llm=llm_cfg_json,
-            system_message=f'Now you need to determine whether the given decision meets the requirements. The compliant actions can only be {self.avaliable_traffic_phase}. ' + \
-                'If it is compliant, the output should be in JSON format with two keys, namely decision and explanation, and no other keys should be used. ' + \
-                    'Among them, decision returns the selected Phase ID, and explanation provides an explanation for the decision. An example is as follows: \n{example_response}.",'
+            system_message=(
+                "You must evaluate whether the given traffic decision complies with the specified requirements, "
+                f"where valid actions can only be from {self.available_traffic_phase}; "
+                "if compliant, output the result in JSON format strictly containing two keys—decision (indicating the selected Phase ID) and explanation (providing the rationale for the decision)—without any additional keys, "
+                f"following the exact structure shown in this example: {example_response}."
+            )
         )
 
     def _run(self, messages: List[Message], lang: str = 'en', **kwargs) -> Iterator[List[Message]]:
@@ -111,7 +124,7 @@ class ConcernCaseAgent(Agent):
         new_messages.append(
             Message(
                 'user',
-                [ContentItem(text='Please make a decision based on the status of each Traffic Phase. The rules are as follows: If there are special vehicles, such as police cars, ambulances or fire engines, give priority to this Traffic Phase; if there are no special vehicles, turn the traffic light green for the direction with more vehicles.')]
+                [ContentItem(text="Make traffic signal decisions based on the status of each Traffic Phase following these rules: if any confirmed emergency vehicles (such as police cars, ambulances, or fire trucks with clear identifiers) are present in a phase, prioritize that phase; otherwise, autonomously analyze and determine the optimal phase sequencing to maintain smooth traffic flow.")]
             )
         ) # 添加新的问题
         response = []
@@ -124,7 +137,12 @@ class ConcernCaseAgent(Agent):
         new_messages.append(
             Message(
                 'user', 
-                [ContentItem(text=f'Please make a decision based on the current scenario and return the data in JSON format. The keys in the JSON are `decision` and `explanation` respectively. The `decision` should include the Traffic Phase ID.')]
+                [ContentItem(
+                    text=(
+                        "Evaluate whether the current traffic decision is compliant, where valid actions must be from {self.available_traffic_phase}; "
+                        "if compliant, return a JSON response containing exactly two keys: decision (specifying the Traffic Phase ID) and explanation (providing the rationale for the decision), with no additional keys permitted."
+                    )
+                )]
             ))
         for rsp in self.check_agent.run(new_messages, lang=lang, **kwargs):
             yield response + rsp

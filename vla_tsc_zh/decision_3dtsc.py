@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-05-09 12:00:44
+LastEditTime: 2025-05-09 13:49:39
 LastEditors: Maonan Wang
 Description: VLA TSC (根据传感器图像进行决策)
 FilePath: /VLM-CloseLoop-TSC/vla_tsc_zh/decision_3dtsc.py
@@ -173,7 +173,7 @@ if __name__ == '__main__':
             junction_mem = {} # 分别记录多个路口的信息 (一个路口不同方向的信息)
             for scene_index in range(PHASE_NUMBER):
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
-                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
+                image_path = os.path.join(_save_folder, f"./{scene_index}.jpg") # 保存的图像数据
                 # 构造多模态输入
                 content = [{"text": "图片为路口摄像头，请你对当前道路进行描述，包括拥堵程度，以及是否存在特殊车辆。如果没有明显的标志，则为普通车辆，只有十分确定是特殊车辆才进行指出，其余车辆都是普通车辆。如果车辆距离路口较远，也不考虑。如果存在特殊车辆，你需要进一步判断车辆正在驶入路口还是驶出，是否已经经过了停车线。只有驶入且在路口内的车辆才需要考虑。"}]
                 content.append({'image': image_path})

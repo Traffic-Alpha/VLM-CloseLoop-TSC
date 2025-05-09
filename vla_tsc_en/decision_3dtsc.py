@@ -1,12 +1,13 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-04-30 17:53:52
+LastEditTime: 2025-05-09 13:49:55
 LastEditors: Maonan Wang
 Description: VLA TSC (根据传感器图像进行决策)
 FilePath: /VLM-CloseLoop-TSC/vla_tsc_en/decision_3dtsc.py
 '''
 # AI Agents
+import os
 import json
 from qwen_agent.agents import GroupChat
 from qwen_agent.utils.output_beautify import typewriter_print
@@ -17,7 +18,6 @@ from vlm_agent import (
     ConcernCaseAgent,
     llm_cfg
 )
-
 
 # 3D TSC ENV
 import re
@@ -32,6 +32,11 @@ from tshub.utils.get_abs_path import get_abs_path
 from tshub.utils.init_log import set_logger
 from utils.make_tsc_env import make_env
 from _config import SCENARIO_CONFIGS
+from utils.tools import (
+    save_to_json, 
+    create_folder,
+    append_response_to_file,
+)
 
 def convert_rgb_to_bgr(image):
     # Convert an RGB image to BGR
@@ -48,8 +53,10 @@ def extract_action(response):
         return np.array([int(match.group())])
     raise ValueError("No number found in the given string.")
 
+
+
 # 全局变量
-scenario_key = "Hongkong_YMT" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
+scenario_key = "SouthKorea_Songdo" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
 config = SCENARIO_CONFIGS.get(scenario_key) # 获取特定场景的配置
 SCENARIO_NAME = config["SCENARIO_NAME"] # 场景名称
 NETFILE = config["NETFILE"] # sumocfg 文件, 加载 eval 文件
@@ -60,7 +67,10 @@ SENSOR_INDEX_2_PHASE_INDEX = config["SENSOR_INDEX_2_PHASE_INDEX"] # 传感器与
 # Init Agents
 concer_case_decision_agent = ConcernCaseAgent(
     name='concer case decision agent',
-    description='You play the role of a traffic police officer directing traffic at an intersection. When there are special vehicles at the intersection, such as police cars, ambulances, and fire engines, etc., it is up to you to make decisions.',
+    description=(
+        'You will roleplay as a traffic police officer directing vehicles at an intersection.'
+        'Your task is to make decisions when special vehicles (such as police cars, ambulances, or fire trucks) approach the crossing, prioritizing their passage while maintaining overall traffic order.'
+    ),
     llm_cfg=llm_cfg,
     phase_num=PHASE_NUMBER, # 当前路口存在的相位数量
 ) 
@@ -105,35 +115,59 @@ if __name__ == '__main__':
 
     # Simulation with environment
     obs = env.reset()
-    seneor_data = None # 初始传感器数据为空, 
+    sensor_datas = None # 初始传感器数据为空, 
     dones = False # 默认是 False
+    time_step = 0
 
     while not dones:
         action, _state = model.predict(obs, deterministic=True) # RL 获得的动作
         rl_agent.update_rl_traffic_phase(new_phase=action) # 更新当前 RL 推荐的动作
 
-        if seneor_data is None:
+        # ##########
+        # 新建文件夹 (存储每一个 step 的信息)
+        # ##########
+        time_step += 1
+        _save_folder = path_convert(f"./{SCENARIO_NAME}/{time_step}/")
+        create_folder(_save_folder)
+        _veh_json_file = os.path.join(_save_folder, 'data.json') # 车辆数据
+        _response_txt_file = os.path.join(_save_folder, 'response.txt') # LLM 回复
+
+        if sensor_datas is None:
             obs, rewards, dones, infos = env.step(action)
 
-            # ######################
-            # 获得并保存传感器的数据
-            # ######################
-            seneor_data = infos[0]['pixel']
+            # ##############################
+            # 获得并保存传感器的数据 & 车辆 JSON
+            # ##############################
+            sensor_datas = infos[0]['3d_data']
+
+            # 保存 3D 场景数据
+            vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
+            save_to_json(vehicle_elements, _veh_json_file)
+
+            # 保存图片数据
+            sensor_data = sensor_datas['image'] # 获得图片数据
             for phase_index in range(PHASE_NUMBER):
-                image_path = path_convert(f"./{JUNCTION_NAME}_{phase_index}.jpg") # 保存的图像数据
-                camera_data = seneor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
+                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
+                camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
                 
         else:
             # (1) 保存传感器数据; (2) 场景图片理解; (3) 将图像询问 agents; (3) 使用这里的 decision 与环境交互
 
-            # ########################
-            # (1) 获得并保存传感器的数据
-            # ########################
-            seneor_data = infos[0]['pixel']
+            # ##############################
+            # 获得并保存传感器的数据 & 车辆 JSON
+            # ##############################
+            sensor_datas = infos[0]['3d_data']
+
+            # 保存 3D 场景数据
+            vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
+            save_to_json(vehicle_elements, _veh_json_file)
+
+            # 保存图片数据
+            sensor_data = sensor_datas['image'] # 获得图片数据
             for phase_index in range(PHASE_NUMBER):
-                image_path = path_convert(f"./{JUNCTION_NAME}_{phase_index}.jpg") # 保存的图像数据
-                camera_data = seneor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
+                image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
+                camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
             
             # ###############
@@ -142,9 +176,17 @@ if __name__ == '__main__':
             junction_mem = {} # 分别记录多个路口的信息 (一个路口不同方向的信息)
             for scene_index in range(PHASE_NUMBER):
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
-                image_path = path_convert(f"./{JUNCTION_NAME}_{scene_index}.jpg") # 保存的图像数据
+                image_path = os.path.join(_save_folder, f"./{scene_index}.jpg") # 保存的图像数据
                 # 构造多模态输入
-                content = [{"text": "The picture shows a traffic intersection camera. Please describe the current road conditions, including the degree of congestion, and whether there are any special vehicles. If there are no obvious signs, they are ordinary vehicles. Only point out special vehicles when you are absolutely certain. All other vehicles are considered ordinary. If the vehicles are far from the intersection, they do not need to be considered. If there are special vehicles, you need to further determine whether the vehicle is entering the intersection or exiting it, and whether it has passed the stop line. Only vehicles that are entering and are within the intersection need to be considered."}]
+                content = [
+                    {
+                        "text": (
+                            "The image shows a traffic intersection from a surveillance camera;" 
+                            "describe the current road conditions, including the level of congestion and whether any special vehicles (such as police cars, ambulances, or fire trucks) are present—only identify a vehicle as special if it has clear markings and is approaching the intersection, "
+                            "otherwise classify it as a regular vehicle; disregard vehicles that are too far from the intersection or not heading toward it."
+                        )
+                    }
+                ]
                 content.append({'image': image_path})
                 messages.append({
                     'role': 'user',
@@ -157,6 +199,8 @@ if __name__ == '__main__':
                 print(f'-->Scene Understand Agent response for Scene-{scene_index}:')
                 for response in scene_understanding_agent.run(messages=messages):
                     response_plain_text = typewriter_print(response, response_plain_text)
+                response_plain_text = f'-->Scene Understand Agent response for Scene-{scene_index}:\n' + response_plain_text
+                append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
                 print('\n---------\n')
                 # Append the bot responses to the chat history.
                 junction_mem[scene_index] = response[0]['content'] # 每个方向的信息
@@ -167,20 +211,24 @@ if __name__ == '__main__':
             junction_description = ""
             for scene_index, scene_text in junction_mem.items():
                 traffic_phase_index = SENSOR_INDEX_2_PHASE_INDEX[scene_index] # 传感器 Index 转换为 Traffic Phase Index
-                junction_description += f"The traffic situation corresponding to Traffic Phase-{traffic_phase_index} is: {scene_text}\n"
+                junction_description += f"Traffic Phase-{traffic_phase_index} 对应的交通情况为：{scene_text}；\n"
             
             # 构建询问的信息
             messages = []
             messages.append({
                 'role': 'user',
-                'content': f"The following are the descriptions of {PHASE_NUMBER} Traffic Phases at an intersection respectively. Please summarize the information of each Traffic Phase according to the detailed descriptions, focusing only on summarizing the congestion situation and whether there are special vehicles, and make it concise. If the vehicle type cannot be identified, it is defaulted to be an ordinary vehicle. Suspected special vehicles are not needed. " + \
-                    f"The following are the detailed descriptions of each Traffic Phase currently: \n{junction_description}"
+                'content': (
+                    f"The following describes {PHASE_NUMBER} Traffic Phases at a cross intersection; summarize each Traffic Phase's key information focusing solely on congestion levels and confirmed presence of special vehicles (police cars/ambulances/fire trucks only when clearly identifiable), "
+                    f"defaulting to regular vehicles if uncertain - exclude any suspected special vehicles and provide only concise overviews without analysis: \n{junction_description}"
+                )
             })
             response = []
             response_plain_text = ''
             print(f'-->Scene Analysis Agent response:')
             for response in scene_analysis_agent.run(messages=messages):
                 response_plain_text = typewriter_print(response, response_plain_text)
+            response_plain_text = f'-->Scene Analysis Agent response:\n' + response_plain_text
+            append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
 
             # ###################
             # (4) 根据场景进行决策
@@ -188,13 +236,15 @@ if __name__ == '__main__':
             messages = []
             messages.append({
                 'role': 'user',
-                'content': f"Please make decisions based on the status of each current Traffic Phase to control the traffic lights. The information of the current Traffic Phase is as follows: \n{response[0]['content']}。"
+                'content': f"Based on the current status of each Traffic Phase, make decisions to control the traffic signals accordingly, taking into account the provided Traffic Phase information to optimize traffic flow while prioritizing safety and efficiency. \n{response[0]['content']}。"
             })
             response = []
             response_plain_text = ''
             print(f'\n-->Group Decision Agent response:')
             for response in group_decision_bots.run(messages=messages, max_round=1):
                 response_plain_text = typewriter_print(response, response_plain_text)
+            response_plain_text = f'-->Group Decision Agent response:\n' + response_plain_text
+            append_response_to_file(file_path=_response_txt_file, content=response_plain_text)
 
             # (5) response -> action
             response_dict = json.loads(response[-1]['content'])
