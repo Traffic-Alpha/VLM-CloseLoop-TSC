@@ -4,7 +4,7 @@
 @Description: 处理 TSCHub ENV 中的 state, reward (处理后的 state 作为 RL 的输入)
 + state: 5 个时刻的每一个 movement 的 queue length
 + reward: 路口总的 waiting time
-LastEditTime: 2025-04-23 15:47:03
+LastEditTime: 2025-05-08 20:58:23
 '''
 import numpy as np
 import gymnasium as gym
@@ -123,7 +123,7 @@ class TSCEnvWrapper(gym.Wrapper):
         avg_occupancy = self.occupancy.calculate_average()
         rewards = self.reward_wrapper(states=states) # 计算 vehicle waiting time
         infos = self.info_wrapper(infos, occupancy=avg_occupancy) # info 里面包含每个 phase 的排队
-        infos['pixel'] = sensor_data # info 包含传感器数据
+        infos['3d_data'] = sensor_data # info 包含传感器数据 (摄像机数据, 车辆位置)
         self.states.append(avg_occupancy)
         state = self.get_state() # 得到 state
 

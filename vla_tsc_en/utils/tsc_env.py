@@ -2,7 +2,7 @@
 @Author: WANG Maonan
 @Date: 2023-09-04 20:43:53
 @Description: 信号灯控制环境 (3D)
-LastEditTime: 2025-04-23 17:49:26
+LastEditTime: 2025-05-09 12:56:06
 '''
 import gymnasium as gym
 
@@ -33,6 +33,7 @@ class TSC3DEnvironment(gym.Env):
             # 用于渲染的参数
             scenario_glb_dir=scenario_glb_dir, # 场景 3D 素材
             render_mode="offscreen", # 如果设置了 use_render_pipeline, 此时只能是 onscreen
+            should_count_vehicles=True,
             debuger_print_node=False,
             debuger_spin_camera=False,
             sensor_config={
