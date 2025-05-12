@@ -1,10 +1,10 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-30 16:32:45
-LastEditTime: 2025-04-30 17:31:09
+LastEditTime: 2025-05-12 11:42:52
 LastEditors: Maonan Wang
 Description: Configs for VLA
-FilePath: /VLM-CloseLoop-TSC/vla_tsc/_config.py
+FilePath: /VLM-CloseLoop-TSC/vla_tsc_en/_config.py
 '''
 # 存储不同场景的配置信息
 SCENARIO_CONFIGS = {
@@ -27,6 +27,6 @@ SCENARIO_CONFIGS = {
         "NETFILE": "massy_eval",
         "JUNCTION_NAME": "INT1",
         "PHASE_NUMBER": 3,
-        "SENSOR_INDEX_2_PHASE_INDEX": {0:2, 1:1, 2:0}
+        "SENSOR_INDEX_2_PHASE_INDEX": {0:2, 1:0, 2:1}
     }
 }
