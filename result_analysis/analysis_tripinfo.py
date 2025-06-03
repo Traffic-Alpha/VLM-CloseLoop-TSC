@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-29 15:23:30
-LastEditTime: 2025-04-30 14:22:55
+LastEditTime: 2025-05-13 16:01:55
 LastEditors: Maonan Wang
 Description: 分析 TripInfo 的结果
 FilePath: /VLM-CloseLoop-TSC/result_analysis/analysis_tripinfo.py
@@ -14,7 +14,7 @@ from tshub.sumo_tools.analysis_output.tripinfo_analysis import TripInfoAnalysis
 current_file_path = get_abs_path(__file__)
 set_logger(current_file_path('./'), file_log_level="INFO")
 
-METHOD = 'RL'
+METHOD = 'VLM'
 SCENARIO_NAME = 'France_Massy' # Hongkong_YMT, SouthKorea_Songdo, France_Massy
 
 tripinfo_file = current_file_path(f"./{METHOD}/{SCENARIO_NAME}/tripinfo.out.xml")

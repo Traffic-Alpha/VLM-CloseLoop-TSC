@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-05-09 13:49:55
+LastEditTime: 2025-05-09 19:09:12
 LastEditors: Maonan Wang
 Description: VLA TSC (根据传感器图像进行决策)
 FilePath: /VLM-CloseLoop-TSC/vla_tsc_en/decision_3dtsc.py
@@ -56,7 +56,7 @@ def extract_action(response):
 
 
 # 全局变量
-scenario_key = "SouthKorea_Songdo" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
+scenario_key = "France_Massy" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
 config = SCENARIO_CONFIGS.get(scenario_key) # 获取特定场景的配置
 SCENARIO_NAME = config["SCENARIO_NAME"] # 场景名称
 NETFILE = config["NETFILE"] # sumocfg 文件, 加载 eval 文件
