@@ -13,6 +13,7 @@ SCENARIO_CONFIGS = {
         "NETFILE": "ymt_eval",
         "JUNCTION_NAME": "J1",
         "PHASE_NUMBER": 4,
+        "CENTER_COORDINATES": (172, 201, 100),
         "SENSOR_INDEX_2_PHASE_INDEX": {0:2, 1:3, 2:0, 3:1}
     },
     "SouthKorea_Songdo": {
@@ -20,6 +21,7 @@ SCENARIO_CONFIGS = {
         "NETFILE": "songdo_eval",
         "JUNCTION_NAME": "J2",
         "PHASE_NUMBER": 4,
+        "CENTER_COORDINATES": (900, 1641, 100),
         "SENSOR_INDEX_2_PHASE_INDEX": {0:2, 1:3, 2:1, 3:0}
     },
     "France_Massy": {
@@ -27,6 +29,7 @@ SCENARIO_CONFIGS = {
         "NETFILE": "massy_eval",
         "JUNCTION_NAME": "INT1",
         "PHASE_NUMBER": 3,
+        "CENTER_COORDINATES": (173, 244, 100),
         "SENSOR_INDEX_2_PHASE_INDEX": {0:2, 1:1, 2:0}
     }
 }
