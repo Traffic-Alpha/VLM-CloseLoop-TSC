@@ -1,10 +1,9 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-29 15:23:30
-LastEditTime: 2025-05-13 16:01:55
-LastEditors: Maonan Wang
-Description: 分析 TripInfo 的结果
-FilePath: /VLM-CloseLoop-TSC/result_analysis/analysis_tripinfo.py
+LastEditTime: 2025-06-30 15:29:22
+LastEditors: WANG Maonan
+Description: Analysis TripInfo File
 '''
 from tshub.utils.init_log import set_logger
 from tshub.utils.get_abs_path import get_abs_path
