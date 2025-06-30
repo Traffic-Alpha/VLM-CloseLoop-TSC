@@ -3,7 +3,7 @@
  * @Date: 2025-04-18 18:22:47
  * @Description: VLMLight
  * @LastEditors: WANG Maonan
- * @LastEditTime: 2025-06-30 17:38:56
+ * @LastEditTime: 2025-06-30 17:49:24
 -->
 # VLMLight: Traffic Signal Control via Vision-Language Meta-Control and Dual-Branch Reasoning
 
@@ -16,7 +16,11 @@
 
 Official implementation of [VLMLight: Traffic Signal Control via Vision-Language Meta-Control and Dual-Branch Reasoning](https://www.arxiv.org/abs/2505.19486).
 
-## 📌 Overview
+## 📌 News
+- **[June 2025]** Codebase open-sourced.
+- **[May 2025]** Initial preprint released on arXiv, [VLMLight](https://www.arxiv.org/abs/2505.19486).
+
+## 🚀 Overview
 
 VLMLight presents a novel vision-language multimodal framework for adaptive traffic signal control, featuring:
 
@@ -24,7 +28,7 @@ VLMLight presents a novel vision-language multimodal framework for adaptive traf
 2. A dual-branch architecture combining fast RL policies with deliberative LLM reasoning
 3. Enhanced handling of safety-critical scenarios through multi-agent collaboration
 
-## 🚀 Key Features
+## ✨ Key Features
 
 ### Image-Based Traffic Simulation
 First multi-view visual traffic simulator enabling context-aware decision making:
