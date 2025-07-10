@@ -3,7 +3,7 @@
  * @Date: 2025-04-18 18:22:47
  * @Description: VLMLight
  * @LastEditors: WANG Maonan
- * @LastEditTime: 2025-06-30 17:49:24
+ * @LastEditTime: 2025-07-10 21:53:05
 -->
 # VLMLight: Traffic Signal Control via Vision-Language Meta-Control and Dual-Branch Reasoning
 
@@ -52,7 +52,6 @@ Specialized pipeline for emergency vehicle prioritization:
 
 ## 🛠️ Installation
 
-### Prerequisites
 1. Install [TransSimHub](https://github.com/Traffic-Alpha/TransSimHub):
 ```bash
 git clone https://github.com/Traffic-Alpha/TransSimHub.git
