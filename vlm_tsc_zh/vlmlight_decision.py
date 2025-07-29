@@ -1,9 +1,9 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-06-30 14:30:30
-LastEditors: WANG Maonan
 Description: VLMLight, 场景理解+决策
+LastEditTime: 2025-07-29 18:56:43
+LastEditors: WANG Maonan
 '''
 import os
 import json
@@ -122,7 +122,7 @@ if __name__ == '__main__':
         # ##########
         # 新建文件夹 (存储每一个 step 的信息)
         # ##########
-        time_step += 1
+        time_step += 1 # 记录 timestep
         _save_folder = path_convert(f"./{SCENARIO_NAME}/{time_step}/")
         create_folder(_save_folder)
         _veh_json_file = os.path.join(_save_folder, 'data.json') # 车辆数据
@@ -159,7 +159,7 @@ if __name__ == '__main__':
             vehicle_elements = sensor_datas['veh_elements'] # 车辆数据
             save_to_json(vehicle_elements, _veh_json_file)
 
-            # 保存图片数据
+            # 保存图片数据 (low quality)
             sensor_data = sensor_datas['image'] # 获得图片数据
             for phase_index in range(PHASE_NUMBER):
                 image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
