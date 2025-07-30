@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-07-30 12:32:17
+LastEditTime: 2025-07-30 14:32:01
 LastEditors: WANG Maonan
 Description: VLM Agent (EN), Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
@@ -40,18 +40,39 @@ scene_understanding_agent = Assistant(
     description="Act as a traffic police officer managing a cross intersection; you'll receive camera feed data from one direction of the intersection and need to describe the traffic conditions including congestion levels and special situations (such as ambulances or police cars) while focusing on clearly identifiable elements that require immediate attention for effective traffic management.",
     llm=vlm_cfg,
     system_message=(
-        "You are now roleplaying as a traffic police officer responsible for monitoring a cross intersection; "
-        "using real-time camera feed data from one direction of the intersection, you must accurately describe the traffic conditions including congestion levels and identify any special vehicles (such as ambulances, police trucks, fire truck). "
-        "All vehicles without identification should be classified as regular vehicles, and only absolutely verifiable emergency vehicles should be reported to ensure reliable traffic management decisions."
+        "Act as a traffic monitoring system analyzing real-time camera images from one direction of a cross intersection. Perform the following tasks with strict accuracy:"
+        "1. **Congestion Assessment**: Quantify traffic density using ONLY these levels:"
+        "   - `Low`: Free-flowing traffic"
+        "   - `Medium`: Steady movement with spacing"
+        "   - `High`: Slow-moving with minimal gaps"
+        "   - `Gridlock`: Stationary vehicles"
+        "2. **Special Vehicle Identification**: Report ONLY confirmed emergency vehicles with visible identifiers:"
+        "     • Ambulances "
+        "     • Police trucks (with roof lights/markings)"
+        "     • Fire trucks"
+        "   - Classify all other vehicles as `Regular`"
+        "   - If uncertain, DO NOT report"
+        "3. **Critical Rules**:"
+        "   - Never guess vehicle types"
+        "   - Prioritize reliability over completeness"
+        "   - Ignore unverifiable vehicles"
+        "Output format in JSON:"
+        """
+        {
+            "congestion_level": "[Low/Medium/High/Gridlock]",
+            "special_vehicles": [True/False]
+        }
+        """
     )
 )
+
 
 # 场景分析&总结 (将多个摄像头结果和 Traffic Phase 联合起来)
 scene_analysis_agent = Assistant(
     llm=llm_cfg,
     system_message=(
-        "You are now roleplaying as a traffic police officer managing multiple intersections; "
-        "you will receive descriptions of these intersections and must first correlate each description with its corresponding traffic phase, "
+        "You are now roleplaying as a traffic police officer managing one intersection; "
+        "you will receive descriptions of the intersection and must first correlate each description with its corresponding traffic phase, "
         "then summarize the status of every traffic phase including congestion levels and confirmed presence of any special vehicles (only those with clearly identifiable markings), "
         "providing a concise overview of each phase's critical traffic conditions for effective decision-making."
     )
@@ -61,40 +82,14 @@ scene_analysis_agent = Assistant(
 mode_select_agent = Assistant(
     llm=llm_cfg,
     system_message=(
-        "There are two following agents are available to control the traffic signal: "
-        "1. concer case decision agent: Only select this agent when there are some emergency vehicles or roadblocks in the junction.\n"
-        "2. normal case decision agent: Under normal traffic conditions, select this agent.\n"
-        "Please select only one agent according to the description."
-        "Only return the role name from [concer case decision agent, normal case decision agent]. Do not reply any other content."
+        "There are two agents available to control traffic signals at a junction: "
+        "1. **Emergency Case Decision Agent**: Select ONLY when special traffic condition are present in the junction.\n"
+        "2. **Normal Case Decision Agent**: Use for normal traffic condition."
+        "Select exactly one agent based on the junction's current situation (including all traffic phases).  "
+        "Return ONLY the agent name from the options below. Do not include any other text. [Emergency Case Decision Agent, Normal Case Decision Agent]. /nothink"
     )
 )
 
-# RL Agent, 常规场景下, 返回强化学习的决策
-class RLAgent(Agent):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.rl_traffic_phase = "Phase-1" # 初始相位
-
-    def _run(self, messages, **kwargs):
-        rl_response = json.dumps(
-            {
-                "decision": f"Phase-{self.rl_traffic_phase[0]}",
-                "explanation": "Under routine traffic conditions, implement the decisions recommended by the reinforcement learning system to optimize traffic flow.",
-            },
-            ensure_ascii=False
-        )
-        yield [Message(role='assistant', content=rl_response, name=self.name)]
-
-    def update_rl_traffic_phase(self, new_phase):
-        """更新 RL 推荐的动作
-        """
-        self.rl_traffic_phase = new_phase
-
-rl_agent = RLAgent(
-    name='normal case decision agent',
-    description='Under normal traffic conditions, implement the decisions recommended by the reinforcement learning mode.',
-    system_message="Under routine traffic conditions, implement the decisions recommended by the reinforcement learning mode to optimize traffic flow while maintaining standard safety protocols."
-)
 
 # Concer Case Agent (包含 3 个 agent, 以此作决策)
 class ConcernCaseAgent(Agent):
@@ -136,7 +131,11 @@ class ConcernCaseAgent(Agent):
         new_messages.append(
             Message(
                 'user',
-                [ContentItem(text="Make traffic signal decisions based on the status of each Traffic Phase following these rules: if any confirmed emergency vehicles (such as police cars, ambulances, or fire trucks with clear identifiers) are present in a phase, prioritize that phase; otherwise, autonomously analyze and determine the optimal phase sequencing to maintain smooth traffic flow.")]
+                [ContentItem(text=(
+                    "Make traffic signal decisions based on the status of each Traffic Phase following these rules: " 
+                    "if any confirmed emergency vehicles (such as police cars, ambulances, or fire trucks with clear identifiers) are present in a phase, prioritize that phase; "
+                    "otherwise, autonomously analyze and determine the optimal phase sequencing to maintain smooth traffic flow."
+                ))]
             )
         ) # 添加新的问题
         response = []
