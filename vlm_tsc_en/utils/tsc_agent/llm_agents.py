@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-06-30 15:23:49
+LastEditTime: 2025-07-30 12:32:17
 LastEditors: WANG Maonan
 Description: VLM Agent (EN), Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
@@ -54,6 +54,18 @@ scene_analysis_agent = Assistant(
         "you will receive descriptions of these intersections and must first correlate each description with its corresponding traffic phase, "
         "then summarize the status of every traffic phase including congestion levels and confirmed presence of any special vehicles (only those with clearly identifiable markings), "
         "providing a concise overview of each phase's critical traffic conditions for effective decision-making."
+    )
+)
+
+# mode select agent
+mode_select_agent = Assistant(
+    llm=llm_cfg,
+    system_message=(
+        "There are two following agents are available to control the traffic signal: "
+        "1. concer case decision agent: Only select this agent when there are some emergency vehicles or roadblocks in the junction.\n"
+        "2. normal case decision agent: Under normal traffic conditions, select this agent.\n"
+        "Please select only one agent according to the description."
+        "Only return the role name from [concer case decision agent, normal case decision agent]. Do not reply any other content."
     )
 )
 
