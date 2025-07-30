@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-LastEditTime: 2025-07-30 13:41:47
+LastEditTime: 2025-07-30 13:46:35
 LastEditors: WANG Maonan
 Description: VLMLight
 '''
@@ -21,6 +21,7 @@ from utils.tsc_agent.llm_agents import (
 import re
 import cv2
 import torch
+import subprocess
 import numpy as np
 
 from stable_baselines3 import PPO
@@ -51,6 +52,33 @@ def extract_action(response):
         return np.array([int(match.group())])
     raise ValueError("No number found in the given string.")
 
+def render_timestep(timestep_folder, scenario_name):
+    """调用外部渲染脚本渲染单个时间步"""
+    blender_file = path_convert(f"../sim_envs/{scenario_name}/env.blend")
+    render_script = path_convert("./render_single_timestep.py")
+    command = [
+        'blender',
+        blender_file,
+        '--background',
+        '--python',
+        render_script,
+        '--',
+        '--timestep_path', timestep_folder
+    ]
+    
+    try:
+        process = subprocess.run(
+            command, 
+            capture_output=True, 
+            text=True,
+            check=True
+        )
+        print(f"✅ 渲染完成 {timestep_folder}")
+    except subprocess.CalledProcessError as e:
+        print(f"🔥 渲染错误 {timestep_folder}:")
+        print(e.stderr)
+    except Exception as e:
+        print(f"🔥 未知渲染错误: {str(e)}")
 
 # 全局变量
 scenario_key = "Hongkong_YMT" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
@@ -65,8 +93,8 @@ SENSOR_INDEX_2_PHASE_INDEX = config["SENSOR_INDEX_2_PHASE_INDEX"] # 传感器与
 concer_case_decision_agent = ConcernCaseAgent(
     name='concer case decision agent',
     description=(
-        'Your task is to make decisions when special vehicles (such as police cars, ambulances, or fire trucks) approach the crossing, '
-        'prioritizing their passage while maintaining overall traffic order.'
+        'You will roleplay as a traffic police officer directing vehicles at an intersection.'
+        'Your task is to make decisions when special vehicles (such as police cars, ambulances, or fire trucks) approach the crossing, prioritizing their passage while maintaining overall traffic order.'
     ),
     llm_cfg=llm_cfg,
     phase_num=PHASE_NUMBER, # 当前路口存在的相位数量
@@ -139,7 +167,10 @@ if __name__ == '__main__':
                 image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
                 camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
-                
+
+            # 立即渲染当前时间步
+            render_timestep(_save_folder, SCENARIO_NAME)
+
         else:
             # (1) 保存传感器数据; (2) 场景图片理解; (3) 将图像询问 agents; (3) 使用这里的 decision 与环境交互
 
@@ -158,14 +189,17 @@ if __name__ == '__main__':
                 image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
                 camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
-            
+
+            # 立即渲染当前时间步
+            render_timestep(_save_folder, SCENARIO_NAME)
+                        
             # ###############
             # (2) 场景图片理解
             # ###############
             junction_mem = {} # 分别记录多个路口的信息 (一个路口不同方向的信息)
             for scene_index in range(PHASE_NUMBER):
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
-                image_path = os.path.join(_save_folder, f"./{scene_index}.jpg") # 保存的图像数据
+                image_path = os.path.join(_save_folder, f"./high_quality_rgb/{scene_index}.png") # 保存的图像数据
                 # 构造多模态输入
                 content = [
                     {
