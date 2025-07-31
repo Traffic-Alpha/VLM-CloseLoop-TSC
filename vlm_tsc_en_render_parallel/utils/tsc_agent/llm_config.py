@@ -3,21 +3,17 @@ Author: Maonan Wang
 Date: 2025-04-24 10:02:21
 Description: LLM Config for AI Agent (Ollama)
 LastEditors: WANG Maonan
-LastEditTime: 2025-07-30 12:38:15
+LastEditTime: 2025-07-30 13:39:00
 '''
 llm_cfg = {
-    'model': 'qwen3:8b',
+    'model': 'qwen3:4b',
     'model_type': 'oai',
     'model_server': 'http://localhost:11435/v1',
     'api_key': 'ollama',
-
-    'generate_cfg': {
-        'top_p': 0.8,
-    }
 }
 
 llm_cfg_json = {
-    'model': 'qwen3:8b',
+    'model': 'qwen3:4b',
     'model_type': 'oai',
     'model_server': 'http://localhost:11435/v1',
     'api_key': 'ollama',

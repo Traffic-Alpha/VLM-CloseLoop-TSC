@@ -1,12 +1,14 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 15:13:54
-Description: VLMLight, 场景理解+决策
-LastEditTime: 2025-07-30 13:28:12
+Description: VLMLight, 场景理解+决策 (根据高精度渲染结果判断)
+LastEditTime: 2025-07-29 19:46:02
 LastEditors: WANG Maonan
 '''
 import os
 import json
+import subprocess
+
 from qwen_agent.agents import GroupChat
 from qwen_agent.utils.output_beautify import typewriter_print
 from utils.tsc_agent.llm_agents import (
@@ -14,7 +16,7 @@ from utils.tsc_agent.llm_agents import (
     scene_analysis_agent, # 场景分析 Agent
     rl_agent, # rl agent
     ConcernCaseAgent, # group agents
-    llm_cfg, vlm_cfg
+    llm_cfg
 )
 
 # 3D TSC ENV
@@ -45,13 +47,41 @@ path_convert = get_abs_path(__file__)
 set_logger(path_convert('./'))
 
 def extract_action(response):
-    """将回复中的文本转换为 Traffic Phase 进行下发
+    """将回复中的文本转换为 Traffic Phase 进行下发, 如果不合规, 则使用 RL 的动作
     """
     match = re.search(r'\d+', response)
     if match:
         return np.array([int(match.group())])
     raise ValueError("No number found in the given string.")
 
+
+def render_timestep(timestep_folder, scenario_name):
+    """调用外部渲染脚本渲染单个时间步"""
+    blender_file = path_convert(f"../sim_envs/{scenario_name}/env.blend")
+    render_script = path_convert("./render_single_timestep.py")
+    command = [
+        'blender',
+        blender_file,
+        '--background',
+        '--python',
+        render_script,
+        '--',
+        '--timestep_path', timestep_folder
+    ]
+    
+    try:
+        process = subprocess.run(
+            command, 
+            capture_output=True, 
+            text=True,
+            check=True
+        )
+        print(f"✅ 渲染完成 {timestep_folder}")
+    except subprocess.CalledProcessError as e:
+        print(f"🔥 渲染错误 {timestep_folder}:")
+        print(e.stderr)
+    except Exception as e:
+        print(f"🔥 未知渲染错误: {str(e)}")
 
 # 全局变量
 scenario_key = "Hongkong_YMT" # Hongkong_YMT, SouthKorea_Songdo, France_Massy
@@ -65,12 +95,12 @@ SENSOR_INDEX_2_PHASE_INDEX = config["SENSOR_INDEX_2_PHASE_INDEX"] # 传感器与
 # Init Agents
 concer_case_decision_agent = ConcernCaseAgent(
     name='concer case decision agent',
-    description='当且只有路口存在特殊车辆，例如警车、救护车和消防车等情况需要你来决策。其他情况不需要你来决策。',
+    description='你扮演一个在路口指挥交通的警察，当路口存在特殊车辆，例如警车、救护车和消防车等情况需要你来决策。',
     llm_cfg=llm_cfg,
     phase_num=PHASE_NUMBER, # 当前路口存在的相位数量
 ) 
 
-agents = [concer_case_decision_agent, rl_agent]
+agents = [rl_agent, concer_case_decision_agent]
 group_decision_bots = GroupChat(
     llm=llm_cfg, 
     agents=agents,
@@ -146,7 +176,10 @@ if __name__ == '__main__':
                 image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
                 camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
-                
+            
+            # 立即渲染当前时间步
+            render_timestep(_save_folder, SCENARIO_NAME)
+
         else:
             # (1) 保存传感器数据; (2) 场景图片理解; (3) 将图像询问 agents; (3) 使用这里的 decision 与环境交互
 
@@ -165,16 +198,19 @@ if __name__ == '__main__':
                 image_path = os.path.join(_save_folder, f"./{phase_index}.jpg") # 保存的图像数据
                 camera_data = sensor_data[f"{JUNCTION_NAME}_{phase_index}"]['junction_front_all']
                 cv2.imwrite(image_path, convert_rgb_to_bgr(camera_data))
-            
+
+            # 立即渲染当前时间步
+            render_timestep(_save_folder, SCENARIO_NAME)
+
             # ###############
             # (2) 场景图片理解
             # ###############
             junction_mem = {} # 分别记录多个路口的信息 (一个路口不同方向的信息)
             for scene_index in range(PHASE_NUMBER):
                 messages = [] # 对话的历史信息, 这里不同方向是独立的
-                image_path = os.path.join(_save_folder, f"./{scene_index}.jpg") # 保存的图像数据
+                image_path = os.path.join(_save_folder, f"./high_quality_rgb/{scene_index}.png") # 保存的图像数据
                 # 构造多模态输入
-                content = [{"text": "图片为路口摄像头，请你对当前道路进行描述，包括拥堵程度，以及是否存在特殊车辆。如果没有明显的标志，则为普通车辆，只有十分确定是特殊车辆才进行指出，其余车辆都是普通车辆。"}]
+                content = [{"text": "图片为路口摄像头，请你对当前道路进行描述，包括拥堵程度，以及是否存在特殊车辆。如果没有明显的标志，则为普通车辆，只有十分确定是特殊车辆才进行指出，其余车辆都是普通车辆。如果存在特殊车辆，你需要进一步判断车辆正在驶入路口还是驶出，是否已经经过了停车线。只有驶入且在路口内的车辆才需要考虑。"}]
                 content.append({'image': image_path})
                 messages.append({
                     'role': 'user',
@@ -201,7 +237,7 @@ if __name__ == '__main__':
                 traffic_phase_index = SENSOR_INDEX_2_PHASE_INDEX[scene_index] # 传感器 Index 转换为 Traffic Phase Index
                 junction_description += f"Traffic Phase-{traffic_phase_index} 对应的交通情况为：{scene_text}；\n"
             
-            # 构建询问的信息 --> 总结路口信息
+            # 构建询问的信息
             messages = []
             messages.append({
                 'role': 'user',
@@ -221,7 +257,7 @@ if __name__ == '__main__':
             messages = []
             messages.append({
                 'role': 'user',
-                'content': f"请你根据当前路口的状态，选择合适的智能体来控制信号灯。当前 Traffic Phase 的信息如下：\n{response[0]['content']}。"
+                'content': f"请你根据当前每一个 Traffic Phase 的状态，做出决策，从而来控制信号灯。当前 Traffic Phase 的信息如下：\n{response[0]['content']}。"
             })
             response = []
             response_plain_text = ''

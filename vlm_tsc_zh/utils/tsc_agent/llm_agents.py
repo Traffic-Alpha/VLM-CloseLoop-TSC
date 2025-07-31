@@ -1,7 +1,7 @@
 '''
 Author: Maonan Wang
 Date: 2025-04-23 18:14:36
-LastEditTime: 2025-06-30 14:30:48
+LastEditTime: 2025-07-30 12:39:16
 LastEditors: WANG Maonan
 Description: VLM Agent, Agents 介绍
 + Scene Understanding Agent, 对每一个路口进行描述
@@ -72,7 +72,7 @@ class RLAgent(Agent):
 
 rl_agent = RLAgent(
     name='normal case decision agent',
-    description='针对常规交通场景，直接调用预训练的强化学习模型。',
+    description='你扮演一个在路口指挥交通的警察，你可以处理大部分情况。',
     system_message="在常规场景下，直接给出强化学习推荐的决策。"
 )
 
